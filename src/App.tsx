@@ -18,6 +18,7 @@ useEffect(() => {
 
 return (
   <div>
+    <p>The media count is: {mediaList.length}</p>
     {mediaList.map(item => (
       <img key={item.id} src={`/media/${item.r2_key}`} alt={item.title} />
     ))}
