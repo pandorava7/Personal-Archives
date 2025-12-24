@@ -1,2 +1,2 @@
-// export const ASSET_BASE_URL = "https://bucket.pandorava7.com";
-export const ASSET_BASE_URL = "http://localhost:5173/r2";
+// src/config/assets.ts
+export const ASSET_BASE_URL = import.meta.env.VITE_ASSET_BASE_URL;
