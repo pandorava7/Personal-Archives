@@ -1,43 +1,72 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./App.css";
+import { ASSET_BASE_URL } from "./config/assets";
+import { useTranslation } from "react-i18next";
+import DiamondButton from "./components/DiamondButton/DiamondButton";
+import LanguageSwitcher from "./components/LanguageSwitcher/LanguageSwitcher";
 
 const App: React.FC = () => {
+  const [entered, setEntered] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  const handleEnter = async () => {
+    setEntered(true);
+
+    // 等待 DOM 渲染完成再播放
+    setTimeout(() => {
+      videoRef.current?.play();
+    }, 0);
+  };
+
+  const { t, i18n } = useTranslation();
+
+  useEffect(() => {
+    document.title = t("site.title");
+  }, [i18n.language]);
+
+  // 初始页面
+  if (!entered) {
+    return (
+      <div className="w-full h-full flex flex-col justify-center items-center">
+        <video
+          ref={videoRef}
+          loop
+          autoPlay
+          controls={false}
+          muted={true}
+          playsInline
+          className="bg-video"
+        >
+          <source src={`${ASSET_BASE_URL}/media/waiting-page.mp4`} type="video/mp4" />
+        </video>
+        <div className="absolute z-10 flex flex-col items-center bottom-0">
+          <DiamondButton onClick={handleEnter} _className="">
+            {t("common.enter")}
+          </DiamondButton>
+          <LanguageSwitcher />
+        </div>
+
+      </div>
+    );
+  }
+
+  // 正式页面
   return (
     <div className="App">
-      {/* <div className="video-container">
-        <iframe
-          src="https://www.youtube.com/embed/UYIeOTV3z4E?autoplay=1&mute=1&loop=1&playlist=UYIeOTV3z4E"
-          title="背景视频"
-          frameBorder="0"
-          allow="autoplay; fullscreen"
-          allowFullScreen
-        ></iframe>
-      </div> */}
-      <video autoPlay loop controls={false} muted={false} className="bg-video">
-        <source src="/videos/myvideo.mp4" type="video/mp4" />
+      <video
+        ref={videoRef}
+        loop
+        controls={false}
+        muted={false}
+        playsInline
+        className="bg-video"
+      >
+        <source src={`${ASSET_BASE_URL}/media/MV.mp4`} type="video/mp4" />
       </video>
 
       <div className="content">
-        <h1>欢迎访问我的新网站！</h1>
-        <p>我刚刚买了这个域名，随便看看吧 😄</p>
-        <div className="buttons">
-          <a
-            href="https://github.com/你的用户名"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn"
-          >
-            GitHub
-          </a>
-          <a
-            href="https://example.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn btn-secondary"
-          >
-            摆美的
-          </a>
-        </div>
+        <h1>{t("common.welcome")}</h1>
+        <p>{t("common.description")}</p>
       </div>
     </div>
   );

@@ -1,0 +1,11 @@
+{
+    "site": {
+        "title": "个人档案馆",
+        "description": "记录、收藏与记忆"
+    },
+    "common": {
+        "enter": "进入",
+        "welcome": "欢迎访问我的新网站！",
+        "description": "我刚刚买了这个域名，随便看看吧"
+    }
+}

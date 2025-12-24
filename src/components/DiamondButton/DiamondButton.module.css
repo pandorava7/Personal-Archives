@@ -1,0 +1,36 @@
+/* DiamondButton.module.css */
+.diamondButton {
+  width: 150px;
+  height: 150px;
+  background-color: #4f46e5;
+  border: none;
+  cursor: pointer;
+  transform: rotate(45deg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s;
+  position: absolute;
+  bottom: 100px;
+  outline: white 2px solid;
+  box-shadow: 20px 20px 20px rgba(0, 0, 0, 0.2);
+  background-image: url('../../../public/enter-page-button.png');
+  background-size: cover;
+  background-position: center;
+  transition: box-shadow 0.3s ease;
+}
+
+.diamondButton:hover {
+  background-color: #3730a3;box-shadow: 
+    20px 20px 20px rgba(0, 0, 0, 0.2),   /* 外阴影 */
+    inset 0 0 50px rgba(0, 0, 0, 0.5); /* 内阴影 */
+}
+
+.diamondContent {
+  transform: rotate(-45deg);
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  font-size: 1.2rem;
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}

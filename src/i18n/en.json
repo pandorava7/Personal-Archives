@@ -1,0 +1,11 @@
+{
+    "site": {
+        "title": "Personal Archives",
+        "description": "Records, collections and memories"
+    },
+    "common": {
+        "enter": "Enter",
+        "welcome": "Welcome to my new website!",
+        "description": "I just bought this domain, take a look"
+    }
+}
