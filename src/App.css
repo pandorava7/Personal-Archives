@@ -40,3 +40,92 @@
 .read-the-docs {
   color: #888;
 }
+
+
+
+
+
+
+/* 页面整体 */
+.App {
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  font-family: "Arial", sans-serif;
+  color: white;
+}
+
+/* 背景视频 */
+.video-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.video-container iframe {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* 中心内容 */
+.content {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1; /* 必须大于视频的 z-index */
+  text-align: center;
+  padding: 50px;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 10px;
+}
+
+
+/* 按钮样式 */
+.buttons {
+  margin-top: 20px;
+}
+
+.btn {
+  display: inline-block;
+  margin: 10px;
+  padding: 12px 24px;
+  font-size: 16px;
+  color: white;
+  background-color: #007bff;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  background-color: #28a745;
+}
+
+.btn-secondary:hover {
+  background-color: #1e7e34;
+}
+
+/* 响应式处理 */
+@media (max-width: 768px) {
+  .content {
+    width: 90%;
+    padding: 15px;
+  }
+
+  .btn {
+    width: 100%;
+    margin: 10px 0;
+  }
+}
