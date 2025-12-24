@@ -18,6 +18,7 @@ const getBrowserLang = () => {
   return "en";
 };
 
+
 i18n
   .use(initReactI18next)
   .init({
