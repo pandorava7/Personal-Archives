@@ -16,6 +16,14 @@ useEffect(() => {
     .then(setMediaList)
 }, [])
 
+fetch("https://nodejs-serverless-function-express-wheat-xi.vercel.app/api/upload", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({ content: "Hello World!" }),
+});
+
 return (
   <div>
     <p>The media count is: {mediaList.length}</p>
