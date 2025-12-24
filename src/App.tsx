@@ -16,13 +16,15 @@ useEffect(() => {
     .then(setMediaList)
 }, [])
 
-fetch("https://nodejs-serverless-function-express-wheat-xi.vercel.app/api/upload", {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json",
-  },
-  body: JSON.stringify({ content: "Hello World!" }),
-});
+useEffect(() => {
+  fetch("https://nodejs-serverless-function-express-wheat-xi.vercel.app/api/upload", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ content: "Hello World!" }),
+  })
+    .then(res => res.json())
+    .then(console.log)
+}, []); // 空依赖数组确保只执行一次
 
 return (
   <div>
