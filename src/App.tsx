@@ -48,7 +48,7 @@ const App: React.FC = () => {
             playsInline
             className="bg-fixed w-full h-full object-cover"
           >
-            <source src={`${ASSET_BASE_URL}/media/waiting-page.mp4`} type="video/mp4" />
+            <source src={`${ASSET_BASE_URL}/media/enter-page.mp4`} type="video/mp4" />
           </video>
 
           <div className="absolute z-10 flex flex-col items-center bottom-0 mb-10">
