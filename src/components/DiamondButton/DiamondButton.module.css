@@ -14,7 +14,7 @@
   bottom: 100px;
   outline: white 2px solid;
   box-shadow: 20px 20px 20px rgba(0, 0, 0, 0.2);
-  background-image: url('../../../public/enter-page-button.png');
+  background-image: url('/public/enter-page-button.png');
   background-size: cover;
   background-position: center;
   transition: box-shadow 0.3s ease;

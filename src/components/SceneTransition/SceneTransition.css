@@ -1,0 +1,117 @@
+/* ================= loading UI ================= */
+
+.loading-ui {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+
+    opacity: 0;
+    animation: fadeIn 0.3s ease forwards;
+    animation-delay: 0.5s;
+}
+
+.loading-text {
+    color: white;
+    font-size: 14px;
+    letter-spacing: 2px;
+}
+
+.loading-bar-wrapper {
+    width: 33vw;
+    height: 4px;
+    background: #444;
+    overflow: hidden;
+}
+
+.loading-bar {
+    width: 100%;
+    height: 100%;
+    background: white;
+    transform: translateX(-100%);
+    animation: loadBar 1s ease-out forwards;
+    animation-delay: 0.5s;
+}
+
+/* 新增：退场状态 */
+.loading-ui.exit {
+    animation: fadeOut 0.2s ease forwards;
+    /* 覆盖之前的 fadeIn 延迟，确保立即开始退场 */
+    animation-delay: 0s; 
+}
+
+/* 确保 loading-bar 在退场时保持填满状态或优雅消失 */
+.loading-ui.exit .loading-bar {
+    transform: translateX(0%); /* 保持进度条满格 */
+    animation: none;
+}
+
+/* ================= animations ================= */
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes loadBar {
+    0% {
+        transform: translateX(-100%);
+    }
+
+    20% {
+        transform: translateX(-100%);
+    }
+
+    100% {
+        transform: translateX(0%);
+    }
+}
+
+/* ================= triangle ================= */
+
+.triangle {
+    clip-path: polygon(100% 100%,
+            50% 75%,
+            0 100%,
+            0 25%,
+            50% 0,
+            100% 25%);
+    background: black;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 200vh;
+    transform: translateY(50%);
+    transition: transform 0.5s ease-in-out;
+    z-index: 999;
+}
+
+.triangle.slide-up-in {
+    transform: translateY(-25%);
+}
+
+.triangle.slide-up-out {
+    transform: translateY(-100%);
+}
