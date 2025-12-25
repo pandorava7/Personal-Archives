@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import DiamondButton from "./components/DiamondButton/DiamondButton";
 import LanguageSwitcher from "./components/LanguageSwitcher/LanguageSwitcher";
 import SceneTransition from "./components/SceneTransition/SceneTransition";
+import Home from "./pages/Home/Home";
 
 const App: React.FC = () => {
   const [entered, setEntered] = useState(false);
@@ -53,29 +54,16 @@ const App: React.FC = () => {
 
           <div className="absolute z-10 flex flex-col items-center bottom-0 mb-10">
             <DiamondButton onClick={handleEnter}>{t("common.enter")}</DiamondButton>
-            <LanguageSwitcher />
+
+            <div className="absolute bottom-20 left-20">
+
+              <LanguageSwitcher direction="right" arrange="up" />
+            </div>
           </div>
         </div>
       ) : (
-        <div className="page-main">
-          {/* <video
-            ref={mainVideoRef}
-            key="main-video"
-            loop
-            autoPlay
-            muted
-            playsInline
-            className="bg-fixed w-full h-full object-cover"
-          >
-            <source src={`${ASSET_BASE_URL}/media/vernal-reverie.mp4`} type="video/mp4" />
-          </video> */}
-
-          <img src={`${ASSET_BASE_URL}/media/伊蕾娜.jpg`} className="bg-fixed" alt="" />
-
-          <div className="content absolute z-10 top-0 left-0 p-10 text-white">
-            <h1>{t("common.welcome")}</h1>
-            <p>{t("common.description")}</p>
-          </div>
+        <div className="page-main w-full h-full ">
+          <Home></Home>
         </div>
       )}
 

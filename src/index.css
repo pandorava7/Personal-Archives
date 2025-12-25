@@ -1,23 +1,94 @@
 @import "tailwindcss";
 
+
 body {
   margin: 0;
   font-family: "MyFont";
 }
 
-#root{
+#root {
   height: 100vh;
   width: 100vw;
+  --box-bg-color: rgb(88.63% 88.63% 88.63% / 0.45)
+}
+
+/* 主题 */
+:root.theme-light {
+  --bg-color: #ffffff;
+  --text-color: #111111;
+  --box-bg-color: rgb(88.63% 88.63% 88.63% / 0.45)
+}
+
+:root.theme-dark {
+  --bg-color: #0b0b0f;
+  --text-color: #eaeaf0;
+  --box-bg-color: rgb(88.63% 88.63% 88.63% / 0.45)
 }
 
 /* 实用类 */
-.transparent-shadow {
-    background-color: transparent;
-    box-shadow: 0 20px 20px rgba(0, 0, 0, 0.9);
-    color: white;
+.box {
+  padding: 20px;
+  background-color: var(--box-bg-color);
 }
 
-.wrapper{
+.rd-infinity {
+  border-radius: 9999px;
+}
+
+.rd-large {
+  border-radius: 40px;
+}
+
+.rd-medium {
+  border-radius: 30px;
+}
+
+.gradient-text {
+  font-weight: bold;
+  background: linear-gradient(90deg, #000000 0%, #737373 50%);
+  -webkit-background-clip: text;
+  /* 文字裁剪背景 */
+  -webkit-text-fill-color: transparent;
+  /* 文字透明，显示背景 */
+}
+
+.button {
+  padding: 0.5rem 0.8rem;
+  border-radius: 9999px;
+  box-shadow: 0 0px 20px rgba(0, 0, 0, 0.9);
+  transition: transform 0.2s ease;
+  cursor: pointer;
+  align-self: flex-end;
+  align-items: center;
+}
+
+.button:hover {
+  transform: scale(1.1);
+}
+
+.button .icon {
+  width: 2rem;
+  /* w-5 */
+  height: 2rem;
+  /* h-5 */
+  flex-shrink: 0;
+}
+
+.transparent-shadow {
+  background-color: transparent;
+  box-shadow: 0 0px 10px rgba(0, 0, 0, 0.9);
+  color: white;
+}
+
+.text-shadow {
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.9);
+}
+
+.text-shadow-sm {
+  text-shadow: 0 0 4px rgba(0, 0, 0, 0.9);
+}
+
+.wrapper {
   position: relative;
   width: 100%;
   height: 100%;
@@ -43,14 +114,20 @@ body {
   0% {
     transform: scale(1);
   }
+
   60% {
-    transform: scale(1.3); /* 超出目标 */
+    transform: scale(1.3);
+    /* 超出目标 */
   }
+
   80% {
-    transform: scale(1.15); /* 回弹 */
+    transform: scale(1.15);
+    /* 回弹 */
   }
+
   100% {
-    transform: scale(1.25);  /* 最终停留 */
+    transform: scale(1.25);
+    /* 最终停留 */
   }
 }
 

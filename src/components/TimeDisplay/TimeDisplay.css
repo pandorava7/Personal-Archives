@@ -1,0 +1,10 @@
+@font-face {
+  font-family: 'SevenSegment';
+  src: url('@/assets/fonts/Digital-7.ttf') format('truetype');
+}
+
+.time {
+  font-family: 'SevenSegment', monospace;
+  font-size: 64px;
+  color: #fff;
+}

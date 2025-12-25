@@ -1,0 +1,8 @@
+.home-character{
+    display: flex;
+}
+
+.home-character img{
+    max-width: 30vw;
+    object-fit: cover;
+}

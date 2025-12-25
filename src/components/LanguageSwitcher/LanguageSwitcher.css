@@ -1,20 +1,9 @@
 .lang-switcher-container {
     display: flex;
     align-items: center;
-    position: absolute;
+    /* position: absolute;
     bottom: 70px;
-    left: 100px;
-}
-
-.lang-switcher-btn {
-    /* background-color: #2563eb; */
-    /* bg-blue-600 */
-    padding: 0.5rem;
-    border-radius: 9999px;
-    box-shadow: 0 20px 20px rgba(0, 0, 0, 0.9);
-    transition: transform 0.2s;
-    cursor: pointer;
-    align-self: flex-end;
+    left: 100px; */
 }
 
 .lang-switcher-btn:hover {
@@ -24,21 +13,46 @@
 }
 
 .lang-options {
+    position: absolute;
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    margin-left: 1rem;
+    margin-left: 1rem; /* 默认右边滑出 */
     transform: translateX(5rem);
     opacity: 0;
     pointer-events: none;
     transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
-.lang-options.open {
-    transform: translateX(0);
+.lang-options.down{
+    top: 0;
+}
+
+.lang-options.up{
+    bottom: 0;
+}
+
+.lang-options.right {
+    margin-right: 3rem;
+    transform: translateX(5rem);
+}
+
+.lang-options.open.right {
+    transform: translateX(3rem);
     opacity: 1;
     pointer-events: auto;
 }
+
+.lang-options.left {
+    transform: translateX(-12rem);
+}
+
+.lang-options.open.left {
+    transform: translateX(-10rem);
+    opacity: 1;
+    pointer-events: auto;
+}
+
 
 .lang-option {
     display: flex;
@@ -50,9 +64,7 @@
     transition: transform 0.2s ease;
 }
 
-.lang-option:hover {
-    transform: scale(1.1);
-}
+
 
 .icon {
     width: 1.25rem;
