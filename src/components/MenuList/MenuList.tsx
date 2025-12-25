@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+// import React, { useEffect, useState } from "react";
 import { playHover, playClick } from "../../utils/sfx";
 import MenuIcon from "./icons/menu.svg?react";
 import "./MenuList.css";

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+// import React, { useEffect, useState } from "react";
 import { playHover, playClick } from "../../utils/sfx";
 import MusicIcon from "./icons/music.svg?react";
 import "./MusicPlayer.css";
