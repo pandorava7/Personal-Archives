@@ -46,7 +46,7 @@ const App: React.FC = () => {
             autoPlay
             muted
             playsInline
-            className="bg-video w-full h-full object-cover"
+            className="bg-fixed w-full h-full object-cover"
           >
             <source src={`${ASSET_BASE_URL}/media/waiting-page.mp4`} type="video/mp4" />
           </video>
@@ -65,12 +65,12 @@ const App: React.FC = () => {
             autoPlay
             muted
             playsInline
-            className="bg-video w-full h-full object-cover"
+            className="bg-fixed w-full h-full object-cover"
           >
             <source src={`${ASSET_BASE_URL}/media/vernal-reverie.mp4`} type="video/mp4" />
           </video> */}
 
-          <img src="" alt="" />
+          <img src={`${ASSET_BASE_URL}/media/伊蕾娜.jpg`} className="bg-fixed" alt="" />
 
           <div className="content absolute z-10 top-0 left-0 p-10 text-white">
             <h1>{t("common.welcome")}</h1>

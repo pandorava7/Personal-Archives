@@ -29,7 +29,7 @@ body {
 }
 
 
-.bg-video {
+.bg-fixed {
   position: fixed;
   inset: 0;
   width: 100%;

@@ -6,6 +6,13 @@
     "common": {
         "enter": "Enter",
         "welcome": "Welcome to my new website!",
-        "description": "I just bought this domain, take a look"
+        "description": "I just bought this domain, take a look",
+        "loading": [
+            "Brewing some coffee…",
+            "Tidying up my desk…",
+            "Taking a short pause…",
+            "Flipping through some notes…",
+            "Watching the world outside…"
+        ]
     }
 }
