@@ -24,7 +24,7 @@ const Home: React.FC = () => {
   const { t } = useTranslation();
 
   return (
-    <div className='home-container w-full h-full'>
+    <div className='home-container w-full'>
       {/* 左上角头像（绝对定位） */}
       <div className='account-area'>
         <img className='w-15 h-15' src={UserAvatar} alt="avatar" />
@@ -48,95 +48,98 @@ const Home: React.FC = () => {
           <img src={`${ASSET_BASE_URL}/media/character/shiro/shiro_character.png`} alt="" />
         </div>
 
-        {/* 个人 */}
-        <div className='personal-area'>
-          <div className='brand'>
-            <div className='title-1-bg'>
-              <p className='title-1'>潘多拉</p>
+        <div className='media-box'>
+          {/* 个人 */}
+          <div className='personal-area'>
+            <div className='brand'>
+              <div className='title-1-bg'>
+                <p className='title-1'>潘多拉</p>
+              </div>
+              <p className='title-2'>的</p>
+              <p className='title-3 text-shadow'>档案馆</p>
+              <img className='brand-logo' src={`${ASSET_BASE_URL}/media/brand.png`} alt="brand logo" />
             </div>
-            <p className='title-2'>的</p>
-            <p className='title-3 text-shadow'>档案馆</p>
-            <img className='brand-logo' src={`${ASSET_BASE_URL}/media/brand.png`} alt="brand logo" />
-          </div>
 
-          <div className='time-area'>
-            <div className='absolute'>
+            <div className='time-area'>
+              <div className='absolute'>
 
-            <WeatherDisplay />
+                <WeatherDisplay />
+              </div>
+              <TimeDisplay />
             </div>
-            <TimeDisplay />
-          </div>
 
-          <div className='box rd-infinity flex gap-5 items-center'>
-            <img className='rd-infinity w-25 h-25' src={Avatar} alt="avatar" />
-            <div className='h-full flex flex-col justify-between w-full pr-5'>
-              <p className='text-xl'>一名热爱创作的开发者</p>
-              <div className='flex justify-end gap-5'>
-                <div className='scroll-button relative button rd-infinity flex flex-row justify-end overflow-hidden w-auto'>
-                  <p className='absolute right-15'>职业</p>
-                  <BriefCaseIcon className='icon' />
+            <div className='box rd-infinity flex gap-5 items-center'>
+              <img className='rd-infinity w-25 h-25' src={Avatar} alt="avatar" />
+              <div className='h-full flex flex-col justify-between w-full pr-5'>
+                <p className='text-xl'>一名热爱创作的开发者</p>
+                <div className='flex justify-end gap-5'>
+                  <div className='scroll-button relative button rd-infinity flex flex-row justify-end overflow-hidden w-auto'>
+                    <p className='absolute right-15'>职业</p>
+                    <BriefCaseIcon className='icon' />
+                  </div>
+                  <div className='button'>
+                    <GithubIcon className='icon' />
+                  </div>
                 </div>
-                <div className='button'>
-                  <GithubIcon className='icon' />
+              </div>
+            </div>
+
+            <div className='flex flex-row justify-between gap-3'>
+              <div className="box-button search-bar box rd-infinity w-7/10 pr-2 flex flex-row items-center">
+                <input
+                  type="text"
+                  placeholder="搜索内容"
+                  className="flex-1 bg-transparent outline-none text-sm"
+                />
+                <SearchIcon className="icon" />
+              </div>
+              <div className='box-button write-article box rd-infinity w-3/10 text-center text-xl'>
+                写文章
+              </div>
+            </div>
+
+            <div className='general-area box rd-large'>
+              <p className='text-shadow-sm'>常规</p>
+              <div className="list w-1/2">
+                <div className="item archive">
+                  <ArchiveIcon className="icon" />
+                  <p>我的收藏</p>
+                </div>
+                <div className="item project">
+                  <ProjectIcon className="icon" />
+                  <p>我的项目</p>
+                </div>
+                <div className="item about">
+                  <AboutIcon className="icon" />
+                  <p>关于网站</p>
+                </div>
+                <div className="item drive">
+                  <DriveIcon className="icon" />
+                  <p>网盘</p>
                 </div>
               </div>
+
+              <div className='w-1/2'>
+
+              </div>
             </div>
           </div>
 
-          <div className='flex flex-row justify-between gap-3'>
-            <div className="box-button search-bar box rd-infinity w-7/10 pr-2 flex flex-row items-center">
-              <input
-                type="text"
-                placeholder="搜索内容"
-                className="flex-1 bg-transparent outline-none text-sm"
-              />
-              <SearchIcon className="icon" />
-            </div>
-            <div className='box-button write-article box rd-infinity w-3/10 text-center text-xl'>
-              写文章
-            </div>
-          </div>
 
-          <div className='general-area box rd-large'>
-            <p className='text-shadow-sm'>常规</p>
-            <div className="list w-1/2">
-              <div className="item archive">
-                <ArchiveIcon className="icon" />
-                <p>我的收藏</p>
-              </div>
-              <div className="item project">
-                <ProjectIcon className="icon" />
-                <p>我的项目</p>
-              </div>
-              <div className="item about">
-                <AboutIcon className="icon" />
-                <p>关于网站</p>
-              </div>
-              <div className="item drive">
-                <DriveIcon className="icon" />
-                <p>网盘</p>
-              </div>
-            </div>
-
-            <div className='w-1/2'>
-
+          {/* 工具箱 */}
+          <div className='tools-area relative'>
+            <p className='gradient-text text-2xl'>工具箱</p>
+            <div className='box rd-large'>
+              <div className="box rd-medium"></div>
+              <div className="box rd-medium"></div>
+              <div className="box rd-medium"></div>
+              <div className="box rd-medium"></div>
+              <div className="box rd-medium"></div>
+              <div className="box rd-medium"></div>
             </div>
           </div>
         </div>
 
-
-        {/* 工具箱 */}
-        <div className='tools-area relative'>
-          <p className='gradient-text text-2xl'>工具箱</p>
-          <div className='box rd-large'>
-            <div className="box rd-medium"></div>
-            <div className="box rd-medium"></div>
-            <div className="box rd-medium"></div>
-            <div className="box rd-medium"></div>
-            <div className="box rd-medium"></div>
-            <div className="box rd-medium"></div>
-          </div>
-        </div>
       </div>
 
     </div>

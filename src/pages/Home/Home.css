@@ -1,9 +1,3 @@
-/* 响应式 */
-/* 第一次：工具箱移到个人内容下面，变成横幅 */
-/* 第二次（手机）：角色移到个人和工具箱下面，品牌和天气交换位置，添加导航栏，左侧头像右侧功能 */
-
-
-
 .home-container {
     position: relative;
     padding-top: 1px;
@@ -44,7 +38,7 @@
     display: flex;
     flex-direction: row;
     gap: 10px;
-    height: 550px;
+    height: auto;
     margin: 0 100px;
 
     margin-top: 150px;
@@ -52,6 +46,7 @@
 
 .home-character {
     display: flex;
+    order: 1;
 }
 
 .home-character img {
@@ -60,79 +55,86 @@
 }
 
 .personal-area {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  min-width: 30vw;
-  margin-top: 50px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-width: 30vw;
+    margin-top: 50px;
 }
 
 .personal-area .brand {
-  position: absolute;
-  top: -120px;
-  left: -70px;
-  width: 250px;
-  height: 100px;
-  display: block; /* 确保显示 */
-  zoom: 120%;
+    position: absolute;
+    top: -120px;
+    left: 120px;
+    width: 250px;
+    height: 100px;
+    display: block;
+    /* 确保显示 */
+    zoom: 120%;
 }
 
 /* title 位置 */
-.title-1-bg{
+.title-1-bg {
     background-color: #34d399;
 
 }
 
 .title-1 {
-  position: absolute;
-  top: -10px;
-  left: -20px;
-  z-index: 1; /* 最下层 */
-  font-size: 3rem;
+    position: absolute;
+    top: -10px;
+    left: -20px;
+    z-index: 1;
+    /* 最下层 */
+    font-size: 3rem;
 
-  color: #6a8aff;
-  background-image: linear-gradient(45deg, #6a8aff , #b2fbff 100%);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  display: inline-block;
+    color: #6a8aff;
+    background-image: linear-gradient(45deg, #6a8aff, #b2fbff 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
 }
 
 .title-2 {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 4; /* 层级在中间 */
-  font-size: 1.5rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 4;
+    /* 层级在中间 */
+    font-size: 1.5rem;
 }
 
 .title-3 {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  z-index: 5; /* 最上层文字 */
-  font-size: 2.5rem;
-  color: white;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    z-index: 5;
+    /* 最上层文字 */
+    font-size: 2.5rem;
+    color: white;
 }
 
 /* logo 放在 title-3 上面，但在 z-index 中间 */
 .brand-logo {
-  position: absolute;
-  bottom: -70px; /* 根据需要调整，让 logo 覆盖在 title-3 上 */
-  right: 10px;
-  z-index: 3; /* 在 title-2 和 title-3 之间 */
-  width: 180px; /* 自定义大小 */
-  height: auto;
+    position: absolute;
+    bottom: -70px;
+    /* 根据需要调整，让 logo 覆盖在 title-3 上 */
+    right: 10px;
+    z-index: 3;
+    /* 在 title-2 和 title-3 之间 */
+    width: 180px;
+    /* 自定义大小 */
+    height: auto;
 }
 
 
 
-.time-area{
+.time-area {
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
+    align-items: flex-start;
     position: absolute;
     top: -90px;
     width: 100%;
@@ -144,129 +146,245 @@
     margin-top: 50px;
 }
 
-.tools-area p{
+.tools-area p {
     position: absolute;
     top: -30px;
 }
 
-.tools-area .box{
+.tools-area .box {
     display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
 }
 
-.tools-area .box .box{
+.tools-area .box .box {
     width: 80px;
     height: 80px;
 }
 
-.box-button{
-padding: 12px;
-align-items: center;
+.box-button {
+    padding: 12px;
+    align-items: center;
 }
 
-.search-bar{
-padding: 12px 24px;
+.search-bar {
+    padding: 12px 24px;
 
 }
 
-.write-article{
+.write-article {
     cursor: pointer;
-background-color: #c0d9f9;
-transition: transform 0.2s ease;
+    background-color: #c0d9f9;
+    transition: transform 0.2s ease;
 }
 
-.write-article:hover{
+.write-article:hover {
     transform: scale(1.1);
 }
 
-.general-area{
-padding: 30px;
+.general-area {
+    padding: 30px;
 }
 
-.general-area p{
+.general-area p {
     color: lightgray;
+    text-shadow: 0 0 4px rgba(0, 0, 0, 0.9);
 }
 
-.list{
+.list {
     display: flex;
     flex-direction: column;
-padding: 5px 0;
-gap:5px;
+    padding: 5px 0;
+    gap: 5px;
 }
 
 .list .item {
-  position: relative; /* 伪元素定位基准 */
-  display: flex;
-  flex-direction: row;
-  gap: 15px;
-  zoom: 120%;
-  font-size: small;
-  cursor: pointer;
-  border-radius: 9999px;
-  padding: 5px 10px;
-  overflow: hidden; /* 防止伪元素溢出 */
+    position: relative;
+    /* 伪元素定位基准 */
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    zoom: 120%;
+    font-size: small;
+    cursor: pointer;
+    border-radius: 9999px;
+    padding: 5px 10px;
+    overflow: hidden;
+    /* 防止伪元素溢出 */
 }
 
 .list .item::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 0; /* 初始宽度为0 */
-  background-color: #c0d9f9;
-  border-radius: 9999px;
-  z-index: 0; /* 背景层 */
-  transition: width 0.3s ease; /* 动画过渡 */
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 0;
+    /* 初始宽度为0 */
+    background-color: #c0d9f9;
+    border-radius: 9999px;
+    z-index: 0;
+    /* 背景层 */
+    transition: width 0.3s ease;
+    /* 动画过渡 */
 }
 
 .list .item:hover::before {
-  width: 100%; /* 悬停时拉满 */
+    width: 100%;
+    /* 悬停时拉满 */
 }
 
-.list .item .icon{
+.list .item .icon {
     z-index: 1;
 }
 
 /* 保证文字在伪元素上方 */
 .list .item p {
-  position: relative;
-  z-index: 1;
-  transition: transform 0.2s ease-out;
+    position: relative;
+    z-index: 1;
+    transition: transform 0.2s ease-out;
 }
 
 .list .item:hover p {
-  color: white;
-  text-shadow: 0 0 4px rgba(0, 0, 0, 0.9);
-  transform: translateX(1rem);
+    color: white;
+    text-shadow: 0 0 4px rgba(0, 0, 0, 0.9);
+    transform: translateX(1rem);
 }
 
-.item.archive::before { background-color: #f87171; } /* 红色 */
-.item.project::before { background-color: #60a5fa; } /* 蓝色 */
-.item.about::before { background-color: #34d399; }   /* 绿色 */
-.item.drive::before { background-color: #fbbf24; }   /* 黄色 */
-
-.scroll-button{
-  width: 60px;
-  transition: width 0.2s ease;
-}
-.scroll-button:hover{
-    width: 110px;
+.item.archive::before {
+    background-color: #f87171;
 }
 
-/* .scroll-button {
-  display: inline-block;
-  width: 100px;
-  transition: width 0.2s ease;
-  padding: 5px 10px;
-  border-radius: 8px;
-  background-color: #3490dc;
-  color: white;
-  text-align: center;
-  cursor: pointer;
+/* 红色 */
+.item.project::before {
+    background-color: #60a5fa;
+}
+
+/* 蓝色 */
+.item.about::before {
+    background-color: #34d399;
+}
+
+/* 绿色 */
+.item.drive::before {
+    background-color: #fbbf24;
+}
+
+/* 黄色 */
+
+.scroll-button {
+    width: 60px;
+    transition: width 0.2s ease;
 }
 
 .scroll-button:hover {
-  width: 110px;
-} */
+    width: 110px;
+}
+
+/* 响应式 */
+/* 第一次：工具箱移到个人内容下面，变成横幅 */
+/* 第二次（手机）：角色移到个人和工具箱下面，品牌和天气交换位置，添加导航栏，左侧头像右侧功能 */
+
+.media-box {
+    order: 2;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+/* 响应式：宽度 <= 1200px */
+@media screen and (max-width: 1200px) {
+    .media-box {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .tools-area .box {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+    }
+
+}
+
+@media screen and (max-width: 1000px) {
+    .content-area {
+        flex-direction: column;
+    }
+
+    .media-box {
+        order: 1;
+    }
+
+    .home-character {
+        order: 2;
+        /* 移到最后 */
+        width: 100%;
+        max-width: 100vw;
+    }
+
+    .home-character img {
+        width: 100%;
+        max-width: none;
+    }
+}
+
+@media screen and (max-width: 650px) {
+
+    .account-area,
+    .function-area {
+        position: fixed;
+        top: 10px;
+        height: 60px;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        z-index: 100;
+    }
+
+    .account-area {
+        left: 0;
+        padding-left: 20px;
+        gap: 12px;
+        zoom: 0.6;
+    }
+
+    .account-area p {
+        font-size: 0.9rem;
+    }
+
+    .function-area {
+        right: 0;
+        flex-direction: row;
+        /* 关键 */
+        padding-right: 20px;
+        gap: 12px;
+        zoom: 0.6;
+    }
+
+    .account-area::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 80px;
+        background: rgba(0, 0, 0, 0.5);
+        /* 或你自己的玻璃效果 */
+        backdrop-filter: blur(10px);
+        z-index: -1;
+    }
+
+    .content-area {
+        margin-top: 250px;
+        /* 隔离导航栏 */
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
+    .personal-area .brand {
+        left: auto;
+        right: 0px;
+        top: -130px;
+    }
+}

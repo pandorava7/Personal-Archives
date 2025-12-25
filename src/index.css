@@ -58,7 +58,6 @@ body {
   box-shadow: 0 0px 20px rgba(0, 0, 0, 0.9);
   transition: transform 0.2s ease;
   cursor: pointer;
-  align-self: flex-end;
   align-items: center;
 }
 
@@ -91,7 +90,7 @@ body {
 .wrapper {
   position: relative;
   width: 100%;
-  height: 100%;
+  height: auto;
   overflow: hidden;
   display: flex;
   flex-direction: column;

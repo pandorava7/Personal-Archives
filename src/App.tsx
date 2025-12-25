@@ -6,6 +6,7 @@ import DiamondButton from "./components/DiamondButton/DiamondButton";
 import LanguageSwitcher from "./components/LanguageSwitcher/LanguageSwitcher";
 import SceneTransition from "./components/SceneTransition/SceneTransition";
 import Home from "./pages/Home/Home";
+import Highlights from "./pages/Highlights/Highlights";
 
 const App: React.FC = () => {
   const [entered, setEntered] = useState(false);
@@ -39,7 +40,7 @@ const App: React.FC = () => {
     <div className="wrapper">
       {/* 场景层：通过 CSS 隐藏或 key 切换 */}
       {!entered ? (
-        <div className="page-waiting">
+        <div className="page-waiting w-screen h-screen">
           <video
             ref={initialVideoRef}
             key="waiting-video"
@@ -47,23 +48,23 @@ const App: React.FC = () => {
             autoPlay
             muted
             playsInline
-            className="bg-fixed w-full h-full object-cover"
+            className="bg-fixed w-full object-cover"
           >
             <source src={`${ASSET_BASE_URL}/media/enter-page.mp4`} type="video/mp4" />
           </video>
 
           <div className="absolute z-10 flex flex-col items-center bottom-0 mb-10">
             <DiamondButton onClick={handleEnter}>{t("common.enter")}</DiamondButton>
-
-            <div className="absolute bottom-20 left-20">
+            <div className="absolute bottom-0">
 
               <LanguageSwitcher direction="right" arrange="up" />
             </div>
           </div>
         </div>
       ) : (
-        <div className="page-main w-full h-full ">
-          <Home></Home>
+        <div className="page-main w-full ">
+          <Home />
+          <Highlights />
         </div>
       )}
 
