@@ -53,12 +53,15 @@ const App: React.FC = () => {
             <source src={`${ASSET_BASE_URL}/media/enter-page.mp4`} type="video/mp4" />
           </video>
 
-          <div className="absolute z-10 flex flex-col items-center bottom-0 mb-10">
-            <DiamondButton onClick={handleEnter}>{t("common.enter")}</DiamondButton>
-            <div className="absolute bottom-0">
+          <div className="absolute z-10 flex flex-col items-center bottom-0 mb-10 w-full">
+            <div className="relative">
+              <DiamondButton onClick={handleEnter}>{t("common.enter")}</DiamondButton>
+              <div className="absolute bottom-0">
 
-              <LanguageSwitcher direction="right" arrange="up" />
+                <LanguageSwitcher direction="right" arrange="up" />
+              </div>
             </div>
+
           </div>
         </div>
       ) : (

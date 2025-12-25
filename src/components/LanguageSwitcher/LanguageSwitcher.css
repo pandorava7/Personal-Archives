@@ -1,9 +1,9 @@
 .lang-switcher-container {
     display: flex;
     align-items: center;
-    /* position: absolute;
+    position: absolute;
     bottom: 70px;
-    left: 100px; */
+    left: 70px;
 }
 
 .lang-switcher-btn:hover {

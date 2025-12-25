@@ -12,6 +12,7 @@
   transition: background-color 0.3s;
   position: absolute;
   bottom: 100px;
+  right: -75px;
   outline: white 2px solid;
   box-shadow: 20px 20px 20px rgba(0, 0, 0, 0.2);
   background-image: url('/public/enter-page-button.png');
