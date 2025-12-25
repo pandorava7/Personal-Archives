@@ -1,6 +1,9 @@
 .lang-switcher-container {
     display: flex;
     align-items: center;
+}
+
+.adjust-in-enter-page{
     position: absolute;
     bottom: 70px;
     left: 70px;

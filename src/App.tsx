@@ -56,7 +56,7 @@ const App: React.FC = () => {
           <div className="absolute z-10 flex flex-col items-center bottom-0 mb-10 w-full">
             <div className="relative">
               <DiamondButton onClick={handleEnter}>{t("common.enter")}</DiamondButton>
-              <div className="absolute bottom-0">
+              <div className="adjust-in-enter-page absolute bottom-0">
 
                 <LanguageSwitcher direction="right" arrange="up" />
               </div>
