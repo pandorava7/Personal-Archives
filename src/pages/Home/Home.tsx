@@ -18,13 +18,20 @@ import ProjectIcon from "./icons/project.svg?react";
 import AboutIcon from "./icons/about.svg?react";
 import DriveIcon from "./icons/drive.svg?react";
 import WeatherDisplay from '../../components/WeatherDisplay/WeatherDisplay';
+import { useNavigate } from 'react-router-dom';
 
 const Home: React.FC = () => {
 
   const { t } = useTranslation();
+  
+  const nav = useNavigate();
+  return <button onClick={() => nav("/map")}>进入世界</button>;
 
   return (
     <div className='home-container w-full'>
+
+      {/* <button onClick={() => nav("/map")}>进入世界</button> */}
+
       {/* 左上角头像（绝对定位） */}
       <div className='account-area'>
         <img className='w-15 h-15' src={UserAvatar} alt="avatar" />

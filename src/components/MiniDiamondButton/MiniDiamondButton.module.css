@@ -1,0 +1,66 @@
+.diamondButton {
+  border: none;
+  cursor: pointer;
+  transform: rotate(45deg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 
+    transform 0.3s cubic-bezier(0.25, 1.25, 0.5, 1),
+    box-shadow 0.3s ease,
+    background 0.5s ease;
+  outline: white 2px solid;
+  box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.2);
+  background-size: cover;
+  background-position: center;
+  z-index: 2;
+  position: relative;
+  overflow: hidden;
+}
+
+.diamondButton::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.1);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.diamondButton:hover {
+  transform: rotate(45deg) scale(1.1) translateY(0px);
+  box-shadow: 15px 15px 20px rgba(0, 0, 0, 0.3),
+              inset 0 0 30px rgba(255, 255, 255, 0.1);
+}
+
+.diamondButton:hover::before {
+  opacity: 1;
+}
+
+.diamondButton:active {
+  transform: rotate(45deg) scale(0.9);
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
+  transition: transform 0.1s cubic-bezier(0.5, 1.5, 0.5, 1), box-shadow 0.1s;
+}
+
+.diamondContent {
+  transform: rotate(-45deg);
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  font-size: 1rem;
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
+  transition: transform 0.3s ease;
+}
+
+.diamondButton:hover .diamondContent {
+  transform: rotate(-45deg) scale(1.1);
+}
+
+.diamondButton:active .diamondContent {
+  transform: rotate(-45deg) scale(0.9);
+}

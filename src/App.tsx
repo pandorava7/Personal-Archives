@@ -6,7 +6,8 @@ import DiamondButton from "./components/DiamondButton/DiamondButton";
 import LanguageSwitcher from "./components/LanguageSwitcher/LanguageSwitcher";
 import SceneTransition from "./components/SceneTransition/SceneTransition";
 import Home from "./pages/Home/Home";
-import Highlights from "./pages/Highlights/Highlights";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import ParallaxMap from "./pages/ParallaxMap/ParallaxMap";
 
 const App: React.FC = () => {
   const [entered, setEntered] = useState(false);
@@ -66,8 +67,12 @@ const App: React.FC = () => {
         </div>
       ) : (
         <div className="page-main w-full ">
-          <Home />
-          <Highlights />
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/map" element={<ParallaxMap />} />
+            </Routes>
+          </BrowserRouter>
         </div>
       )}
 
