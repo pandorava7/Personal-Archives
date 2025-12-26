@@ -33,8 +33,10 @@ body {
     width: 100%;
     object-fit: cover;
     will-change: transform;
-    user-select: none;
     pointer-events: none;
+  user-select: none;       /* 禁止文字/图片选中 */
+  -webkit-user-drag: none; /* 禁止图片拖动 */
+  pointer-events: none;
 }
 
 .ui {

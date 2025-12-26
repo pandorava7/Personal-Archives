@@ -64,6 +64,7 @@ export default function ParallaxMap() {
     }, []);
 
     const onDown = (e: React.PointerEvent) => {
+        e.preventDefault(); // 阻止默认拖拽
         dragging.current = true;
         last.current = { x: e.clientX, y: e.clientY };
     };
@@ -88,6 +89,8 @@ export default function ParallaxMap() {
     };
 
     const inertiaStep = () => {
+        if (dragging.current) return; // 拖拽中不执行惯性
+
         velocity.current.x *= 0.95;
         velocity.current.y *= 0.95;
 
@@ -95,7 +98,6 @@ export default function ParallaxMap() {
             let newX = clamp(p.x + velocity.current.x, minX, maxX);
             let newY = clamp(p.y + velocity.current.y, minY, maxY);
 
-            // 如果碰到边界，停止惯性
             if (newX === minX || newX === maxX) velocity.current.x = 0;
             if (newY === minY || newY === maxY) velocity.current.y = 0;
 
@@ -167,7 +169,7 @@ export default function ParallaxMap() {
                             zIndex: 2,
                             width: 1000,          // 容器宽高可根据需要调整
                             height: 1000,          // 比如这里容器就足够包住所有按钮
-                            border: "1px solid gray", // 可选，方便调试
+                            // border: "1px solid gray", // 可选，方便调试
                         }}
                     >
                         <button style={{ position: "absolute", left: 0, top: 0, zIndex: 2 }}>
@@ -198,7 +200,44 @@ export default function ParallaxMap() {
                         <Line start={{ x: 400 + 40, y: 200 + 40 }} end={{ x: 400 + 40, y: -200 + 40 }} />
                     </div>
 
-
+                    <div
+                        style={{
+                            position: "absolute", // 顶层容器相对定位
+                            left: 1500,
+                            top: 3300,
+                            zIndex: 2,
+                            width: 1000,          // 容器宽高可根据需要调整
+                            height: 1000,          // 比如这里容器就足够包住所有按钮
+                            // border: "1px solid gray", // 可选，方便调试
+                        }}
+                    >
+                        <button style={{ position: "absolute", left: 0, top: 0, zIndex: 2 }}>
+                            <MiniDiamondButton bg={1} size={80} onClick={() => console.log("clicked")}>
+                                1-25
+                            </MiniDiamondButton>
+                        </button>
+                        <button style={{ position: "absolute", left: 200, top: 0, zIndex: 2 }}>
+                            <MiniDiamondButton bg={1} size={80} onClick={() => console.log("clicked")}>
+                                2-23
+                            </MiniDiamondButton>
+                        </button>
+                        <button style={{ position: "absolute", left: 400, top: -200, zIndex: 2 }}>
+                            <MiniDiamondButton bg={1} size={80} onClick={() => console.log("clicked")}>
+                                2-28
+                            </MiniDiamondButton>
+                        </button>
+                        <button style={{ position: "absolute", left: 400, top: 200, zIndex: 2 }}>
+                            <MiniDiamondButton bg={2} size={80} onClick={() => console.log("clicked")}>
+                                3-12
+                            </MiniDiamondButton>
+                        </button>
+                        {/* 两两连线 */}
+                        <Line start={{ x: 0 + 40, y: 0 + 40 }} end={{ x: 200 + 40, y: 0 + 40 }} />
+                        <Line start={{ x: 0 + 40, y: 0 + 40 }} end={{ x: 400 + 40, y: 200 + 40 }} />
+                        <Line start={{ x: 200 + 40, y: 0 + 40 }} end={{ x: 400 + 40, y: 200 + 40 }} />
+                        <Line start={{ x: 200 + 40, y: 0 + 40 }} end={{ x: 400 + 40, y: -200 + 40 }} />
+                        <Line start={{ x: 400 + 40, y: 200 + 40 }} end={{ x: 400 + 40, y: -200 + 40 }} />
+                    </div>
 
                 </div>
             </div>

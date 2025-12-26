@@ -39,8 +39,17 @@ const App: React.FC = () => {
 
   return (
     <div className="wrapper">
+
+      
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home/>} />
+          <Route path="/map" element={<ParallaxMap />} />
+        </Routes>
+      </BrowserRouter>
+
       {/* 场景层：通过 CSS 隐藏或 key 切换 */}
-      {!entered ? (
+      {!entered && (
         <div className="page-waiting w-screen h-screen">
           <video
             ref={initialVideoRef}
@@ -64,15 +73,6 @@ const App: React.FC = () => {
             </div>
 
           </div>
-        </div>
-      ) : (
-        <div className="page-main w-full ">
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/map" element={<ParallaxMap />} />
-            </Routes>
-          </BrowserRouter>
         </div>
       )}
 
