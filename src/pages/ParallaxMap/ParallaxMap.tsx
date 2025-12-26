@@ -5,7 +5,7 @@ import Flower2 from "@/assets/images/layer/act2_flower2.png";
 import Shards1 from "@/assets/images/layer/act2_shards1.png";
 import Shards2 from "@/assets/images/layer/act2_shards2.png";
 import World from "@/assets/images/layer/world2.jpg";
-import DiamondButton from "../../components/DiamondButton/DiamondButton";
+// import DiamondButton from "../../components/DiamondButton/DiamondButton";
 import MiniDiamondButton from "../../components/MiniDiamondButton/MiniDiamondButton";
 import Line from "../../components/Line/Line";
 
