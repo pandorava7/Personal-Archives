@@ -1,5 +1,5 @@
 // Home.tsx
-import React, { startTransition, useTransition } from 'react';
+import React from 'react';
 import './Home.css';
 import { useTranslation } from 'react-i18next';
 import LanguageSwitcher from '../../components/LanguageSwitcher/LanguageSwitcher';
@@ -18,7 +18,6 @@ import ProjectIcon from "./icons/project.svg?react";
 import AboutIcon from "./icons/about.svg?react";
 import DriveIcon from "./icons/drive.svg?react";
 import WeatherDisplay from '../../components/WeatherDisplay/WeatherDisplay';
-import { useNavigate } from 'react-router-dom';
 import DiamondButton from '../../components/DiamondButton/DiamondButton';
 import { useSceneTransition } from '../../App';
 

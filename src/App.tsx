@@ -6,7 +6,7 @@ import DiamondButton from "./components/DiamondButton/DiamondButton";
 import LanguageSwitcher from "./components/LanguageSwitcher/LanguageSwitcher";
 import SceneTransition from "./components/SceneTransition/SceneTransition";
 import Home from "./pages/Home/Home";
-import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import ParallaxMap from "./pages/ParallaxMap/ParallaxMap";
 
 export type TransitionOptions = {
