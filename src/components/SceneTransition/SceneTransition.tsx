@@ -3,16 +3,19 @@ import "./SceneTransition.css";
 import { useTranslation } from "react-i18next";
 
 interface SceneTransitionProps {
-    active: boolean;
-    duration?: number; // 伪加载时长
-    onFinish?: () => void;
+  active: boolean;
+  duration?: number;
+  onMid?: () => void;
+  onFinish?: () => void;
 }
 
 const SceneTransition: React.FC<SceneTransitionProps> = ({
     active,
     duration = 1500,
+    onMid,
     onFinish,
 }) => {
+    const IN_DURATION = 800; // slide-up-in 的 CSS 时长
     const [isVisible, setIsVisible] = useState(true); // 控制组件是否在 DOM 中
     const [phase, setPhase] = useState<"idle" | "in" | "out">("idle");
 
@@ -21,41 +24,44 @@ const SceneTransition: React.FC<SceneTransitionProps> = ({
     const [randomMessage, setRandomMessage] = useState("");
 
     useEffect(() => {
+  if (!active) return;
 
-        if (active) {
-            setIsVisible(true);
-            setPhase("idle"); // 初始状态
+  setIsVisible(true);
+  setPhase("idle");
 
-            // 下一帧再触发 in
-            requestAnimationFrame(() => {
-            requestAnimationFrame(() => {
-                setPhase("in");
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      setPhase("in");
 
-                const loadingArray: string[] = t("common.loading", { returnObjects: true }) as string[];
-                const message = loadingArray[Math.floor(Math.random() * loadingArray.length)];
-                setRandomMessage(message); // <-- 更新 state
-            });
-        });
+      const loadingArray = t("common.loading", { returnObjects: true }) as string[];
+      setRandomMessage(
+        loadingArray[Math.floor(Math.random() * loadingArray.length)]
+      );
+    });
+  });
 
-            const switchTimer = setTimeout(() => {
-                onFinish?.();
-            }, 800);
+  // ✅ onMid：遮罩完全盖住
+  const midTimer = setTimeout(() => {
+    onMid?.();
+  }, IN_DURATION);
 
-            const outTimer = setTimeout(() => {
-                setPhase("out");
-            }, duration);
+  // 开始 out
+  const outTimer = setTimeout(() => {
+    setPhase("out");
+  }, duration);
 
-            const removeTimer = setTimeout(() => {
-                setIsVisible(false);
-            }, duration + 800);
+  // ✅ onFinish：整个转场结束
+  const finishTimer = setTimeout(() => {
+    onFinish?.();
+    setIsVisible(false);
+  }, duration + IN_DURATION);
 
-            return () => {
-                clearTimeout(switchTimer);
-                clearTimeout(outTimer);
-                clearTimeout(removeTimer);
-            };
-        }
-    }, [active, duration]);
+  return () => {
+    clearTimeout(midTimer);
+    clearTimeout(outTimer);
+    clearTimeout(finishTimer);
+  };
+}, [active, duration]);
 
     if (!isVisible) return null;
 

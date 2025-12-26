@@ -8,20 +8,24 @@ import World from "@/assets/images/layer/world2.jpg";
 // import DiamondButton from "../../components/DiamondButton/DiamondButton";
 import MiniDiamondButton from "../../components/MiniDiamondButton/MiniDiamondButton";
 import Line from "../../components/Line/Line";
+import { useSceneTransition } from "../../App";
 
 export default function ParallaxMap() {
-    const initialPos = { x: 0, y: -6000 }; // 从 console.log 里得到
+    const initialPos = { x: 0, y: -6000 };
     const [pos, setPos] = useState(initialPos);
+    const [dragSpeedIndex, setDragSpeedIndex] = useState(3); // 初始为 2.0
     const velocity = useRef({ x: 0, y: 0 });
     const dragging = useRef(false);
     const last = useRef({ x: 0, y: 0 });
+
     const screenWidth = window.innerWidth;
 
-    // 假设参考宽度：
+    const speedOptions = [0.5, 1, 2, 4, 8];
+    const dragSpeeds = speedOptions;
+
     const desktopWidth = 1536;
     const mobileWidth = 390;
 
-    // 已知最佳值
     const desktopDrag = 0.4;
     const desktopWorldWidth = 6100;
     const desktopWorldHeight = 13000;
@@ -30,27 +34,23 @@ export default function ParallaxMap() {
     const mobileWorldWidth = 16000;
     const mobileWorldHeight = 14000;
 
-    // drag_multiplier 线性插值
-    const drag_multiplier = desktopDrag +
+    // 线性插值
+    const drag_multiplier_base = desktopDrag +
         (screenWidth - desktopWidth) / (mobileWidth - desktopWidth) * (mobileDrag - desktopDrag);
+    const drag_multiplier = drag_multiplier_base * dragSpeeds[dragSpeedIndex];
 
-    // worldWidth 同理
     const worldWidth = desktopWorldWidth +
         (screenWidth - desktopWidth) / (mobileWidth - desktopWidth) * (mobileWorldWidth - desktopWorldWidth);
-
-    // worldHeight 同理
     const worldHeight = desktopWorldHeight +
         (screenWidth - desktopWidth) / (mobileWidth - desktopWidth) * (mobileWorldHeight - desktopWorldHeight);
-
 
     const clamp = (value: number, min: number, max: number) =>
         Math.max(min, Math.min(value, max));
 
-    const drag_multiplier_final = clamp(drag_multiplier, desktopDrag, mobileDrag);
+    const drag_multiplier_final = clamp(drag_multiplier, desktopDrag, mobileDrag * 2); // 放宽上限
     const worldWidth_final = clamp(worldWidth, desktopWorldWidth, mobileWorldWidth);
     const worldHeight_final = clamp(worldHeight, desktopWorldHeight, mobileWorldHeight);
 
-    console.log(window.innerWidth)
     const minX = window.innerWidth - worldWidth_final;
     const maxX = 0;
     const minY = window.innerHeight - worldHeight_final;
@@ -64,7 +64,7 @@ export default function ParallaxMap() {
     }, []);
 
     const onDown = (e: React.PointerEvent) => {
-        e.preventDefault(); // 阻止默认拖拽
+        e.preventDefault();
         dragging.current = true;
         last.current = { x: e.clientX, y: e.clientY };
     };
@@ -89,7 +89,7 @@ export default function ParallaxMap() {
     };
 
     const inertiaStep = () => {
-        if (dragging.current) return; // 拖拽中不执行惯性
+        if (dragging.current) return;
 
         velocity.current.x *= 0.95;
         velocity.current.y *= 0.95;
@@ -109,6 +109,13 @@ export default function ParallaxMap() {
         }
     };
 
+    const toggleSpeed = () => {
+        setDragSpeedIndex((prev) => (prev + 1) % dragSpeeds.length);
+    };
+
+
+    const { startTransition } = useSceneTransition();
+
     return (
         <div
             className="viewport"
@@ -117,6 +124,46 @@ export default function ParallaxMap() {
             onPointerUp={onUp}
             onPointerLeave={onUp}
         >
+            {/* 左上角固定按钮 */}
+            <button className="button transparent-shadow"
+                style={{
+                    position: "fixed",
+                    left: 20,
+                    top: 20,
+                    zIndex: 999,
+                    padding: "8px 12px",
+                    fontSize: "16px",
+                    color: "white",
+
+                }}
+                onClick={toggleSpeed}
+            >
+                {dragSpeeds[dragSpeedIndex].toFixed(1)}
+            </button>
+            <button className="button transparent-shadow"
+                style={{
+                    position: "fixed",
+                    left: 100,
+                    top: 20,
+                    zIndex: 999,
+                    padding: "8px 12px",
+                    fontSize: "16px",
+                    color: "white",
+
+                }}
+                 onClick={() =>
+                startTransition("/", {
+                    onMid: () => {
+                        console.log("现在是黑屏，可以切页面");
+                    },
+                    onDone: () => {
+                        console.log("转场完成");
+                    },
+                })
+
+            }>
+回到主页
+            </button>
             <div className="world">
                 <img
                     className="layer world-layer"
@@ -156,6 +203,8 @@ export default function ParallaxMap() {
                     }}
                 />
 
+
+
                 {/* 顶层自由内容 */}
                 <div
                     className="ui"
@@ -172,26 +221,26 @@ export default function ParallaxMap() {
                             // border: "1px solid gray", // 可选，方便调试
                         }}
                     >
-                        <button style={{ position: "absolute", left: 0, top: 0, zIndex: 2 }}>
+                        <div style={{ position: "absolute", left: 0, top: 0, zIndex: 2 }}>
                             <MiniDiamondButton bg={1} size={80} onClick={() => console.log("clicked")}>
                                 1-25
                             </MiniDiamondButton>
-                        </button>
-                        <button style={{ position: "absolute", left: 200, top: 0, zIndex: 2 }}>
+                        </div>
+                        <div style={{ position: "absolute", left: 200, top: 0, zIndex: 2 }}>
                             <MiniDiamondButton bg={1} size={80} onClick={() => console.log("clicked")}>
                                 2-23
                             </MiniDiamondButton>
-                        </button>
-                        <button style={{ position: "absolute", left: 400, top: -200, zIndex: 2 }}>
+                        </div>
+                        <div style={{ position: "absolute", left: 400, top: -200, zIndex: 2 }}>
                             <MiniDiamondButton bg={1} size={80} onClick={() => console.log("clicked")}>
                                 2-28
                             </MiniDiamondButton>
-                        </button>
-                        <button style={{ position: "absolute", left: 400, top: 200, zIndex: 2 }}>
+                        </div>
+                        <div style={{ position: "absolute", left: 400, top: 200, zIndex: 2 }}>
                             <MiniDiamondButton bg={2} size={80} onClick={() => console.log("clicked")}>
                                 3-12
                             </MiniDiamondButton>
-                        </button>
+                        </div>
                         {/* 两两连线 */}
                         <Line start={{ x: 0 + 40, y: 0 + 40 }} end={{ x: 200 + 40, y: 0 + 40 }} />
                         <Line start={{ x: 0 + 40, y: 0 + 40 }} end={{ x: 400 + 40, y: 200 + 40 }} />
@@ -211,26 +260,26 @@ export default function ParallaxMap() {
                             // border: "1px solid gray", // 可选，方便调试
                         }}
                     >
-                        <button style={{ position: "absolute", left: 0, top: 0, zIndex: 2 }}>
+                        <div style={{ position: "absolute", left: 0, top: 0, zIndex: 2 }}>
                             <MiniDiamondButton bg={1} size={80} onClick={() => console.log("clicked")}>
                                 1-25
                             </MiniDiamondButton>
-                        </button>
-                        <button style={{ position: "absolute", left: 200, top: 0, zIndex: 2 }}>
+                        </div>
+                        <div style={{ position: "absolute", left: 200, top: 0, zIndex: 2 }}>
                             <MiniDiamondButton bg={1} size={80} onClick={() => console.log("clicked")}>
                                 2-23
                             </MiniDiamondButton>
-                        </button>
-                        <button style={{ position: "absolute", left: 400, top: -200, zIndex: 2 }}>
+                        </div>
+                        <div style={{ position: "absolute", left: 400, top: -200, zIndex: 2 }}>
                             <MiniDiamondButton bg={1} size={80} onClick={() => console.log("clicked")}>
                                 2-28
                             </MiniDiamondButton>
-                        </button>
-                        <button style={{ position: "absolute", left: 400, top: 200, zIndex: 2 }}>
+                        </div>
+                        <div style={{ position: "absolute", left: 400, top: 200, zIndex: 2 }}>
                             <MiniDiamondButton bg={2} size={80} onClick={() => console.log("clicked")}>
                                 3-12
                             </MiniDiamondButton>
-                        </button>
+                        </div>
                         {/* 两两连线 */}
                         <Line start={{ x: 0 + 40, y: 0 + 40 }} end={{ x: 200 + 40, y: 0 + 40 }} />
                         <Line start={{ x: 0 + 40, y: 0 + 40 }} end={{ x: 400 + 40, y: 200 + 40 }} />

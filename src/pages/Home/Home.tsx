@@ -1,5 +1,5 @@
 // Home.tsx
-import React from 'react';
+import React, { startTransition, useTransition } from 'react';
 import './Home.css';
 import { useTranslation } from 'react-i18next';
 import LanguageSwitcher from '../../components/LanguageSwitcher/LanguageSwitcher';
@@ -19,18 +19,39 @@ import AboutIcon from "./icons/about.svg?react";
 import DriveIcon from "./icons/drive.svg?react";
 import WeatherDisplay from '../../components/WeatherDisplay/WeatherDisplay';
 import { useNavigate } from 'react-router-dom';
+import DiamondButton from '../../components/DiamondButton/DiamondButton';
+import { useSceneTransition } from '../../App';
 
-const Home: React.FC = () => {
+interface HomeProps {
+  entered: boolean;
+}
 
+
+const Home: React.FC<HomeProps> = ({ entered }) => {
   const { t } = useTranslation();
-  
-  const nav = useNavigate();
-  return <button onClick={() => nav("/map")}>进入世界</button>;
+
+
+  const { startTransition } = useSceneTransition();
+
+  if (!entered) return null;
 
   return (
     <div className='home-container w-full'>
 
-      {/* <button onClick={() => nav("/map")}>进入世界</button> */}
+      <DiamondButton
+      bg={2}
+        _className="absolute right-30 top-15"
+        onClick={() =>
+          startTransition("/map", {
+            onMid: () => {
+              console.log("现在是黑屏，可以切页面");
+            },
+            onDone: () => {
+              console.log("转场完成");
+            },
+          })
+
+        }>{t("common.enter")}</DiamondButton>
 
       {/* 左上角头像（绝对定位） */}
       <div className='account-area'>

@@ -55,7 +55,7 @@ body {
 .button {
   padding: 0.5rem 0.8rem;
   border-radius: 9999px;
-  box-shadow: 0 0px 20px rgba(0, 0, 0, 0.9);
+  box-shadow: 0 0px 20px rgba(255,255,255, 0.9);
   transition: transform 0.2s ease;
   cursor: pointer;
   align-items: center;
@@ -75,7 +75,7 @@ body {
 
 .transparent-shadow {
   background-color: transparent;
-  box-shadow: 0 0px 10px rgba(0, 0, 0, 0.9);
+  box-shadow: 0 0px 10px rgba(255,255,255, 0.9);
   color: white;
 }
 
