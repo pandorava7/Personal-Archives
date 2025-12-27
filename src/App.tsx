@@ -82,7 +82,7 @@ const App: React.FC = () => {
 
       {/* 场景层：通过 CSS 隐藏或 key 切换 */}
       {!entered && (
-        <div className="page-waiting w-screen h-screen">
+        <div className="page-waiting w-screen h-screen overflow-y-hidden">
           <video
             ref={initialVideoRef}
             key="waiting-video"
