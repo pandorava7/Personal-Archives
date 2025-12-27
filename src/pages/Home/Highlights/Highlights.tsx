@@ -36,10 +36,10 @@ const Highlights: React.FC = () => {
             {/* <div className="normal-button transparent-shadow">
               <span className="button-text">记忆迴廊</span>
             </div> */}
-            <div className='absolute top-15 right-3'>
+            <div className='relative -top-30'>
               <DiamondButton
                 bg={2}
-                _className="absolute right-30 top-65"
+                _className="absolute -right-7 top-65"
                 height={20} width={140}
                 onClick={() =>
                   startTransition("/map", {
@@ -54,7 +54,7 @@ const Highlights: React.FC = () => {
                 }></DiamondButton>
               <DiamondButton
                 bg={2}
-                _className="absolute right-20 top-55"
+                _className="absolute -right-15 top-55"
                 width={20} height={80}
                 onClick={() =>
                   startTransition("/map", {
@@ -69,7 +69,7 @@ const Highlights: React.FC = () => {
                 }></DiamondButton>
               <DiamondButton
                 bg={2}
-                _className="absolute right-25 top-37"
+                _className="absolute -right-12 top-37"
                 width={90} height={90}
                 onClick={() =>
                   startTransition("/map", {
