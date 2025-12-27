@@ -49,7 +49,7 @@ const Dashboard: React.FC = () => {
       <div className='content-area'>
         {/* 角色 */}
         <div className='home-character'>
-          <img src={`${ASSET_BASE_URL}/media/character/shiro/shiro_character.png`} alt="" />
+          <img src={`${ASSET_BASE_URL}/media/character/45.png`} alt="" />
         </div>
 
         <div className='media-box'>

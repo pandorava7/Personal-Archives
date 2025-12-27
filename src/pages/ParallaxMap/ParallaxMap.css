@@ -42,3 +42,31 @@ footer {
     color: white;
     padding: 10px 0;
 }
+
+/* 左上角控制栏 */
+.map-controls {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 999;
+
+  display: flex;
+  gap: 12px;
+}
+
+/* 统一按钮外观 */
+.control-button {
+  padding: 8px 12px;
+  font-size: 16px;
+  color: white;
+
+  background: transparent;
+  border: none;
+  cursor: pointer;
+
+  /* 复用你原来的按钮风格 */
+}
+
+.control-button.button {
+  /* 如果你 button 是全局类，可省略 */
+}

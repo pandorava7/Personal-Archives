@@ -42,7 +42,7 @@ export default function ParallaxMap() {
 
     const mobileDrag = 1;
     const mobileWorldWidth = 16000;
-    const mobileWorldHeight = 14000;
+    const mobileWorldHeight = 14000;    
 
     // 线性插值
     const drag_multiplier_base = desktopDrag +
@@ -135,48 +135,49 @@ export default function ParallaxMap() {
             onPointerLeave={onUp}
         >
             {/* 左上角固定按钮 */}
-            <button className="button transparent-shadow"
-                onMouseEnter={playHover} onClick={() => {
-                    playClick();
-                    toggleSpeed();
-                }}
-                style={{
-                    position: "fixed",
-                    left: 20,
-                    top: 20,
-                    zIndex: 999,
-                    padding: "8px 12px",
-                    fontSize: "16px",
-                    color: "white",
+            <div className="map-controls">
+                <button
+                    className="button transparent-shadow control-button"
+                    onMouseEnter={playHover}
+                    onClick={() => {
+                        playClick();
+                        toggleSpeed();
+                    }}
+                >
+                    {dragSpeeds[dragSpeedIndex].toFixed(1)}
+                </button>
 
-                }}
-            >
-                {dragSpeeds[dragSpeedIndex].toFixed(1)}
-            </button>
-            <button className="button transparent-shadow"
-                onMouseEnter={playHover} onClick={() => {
-                    playClick();
-                    startTransition("/", {
-                        onMid: () => {
-                            console.log("现在是黑屏，可以切页面");
-                        },
-                        onDone: () => {
-                            console.log("转场完成");
-                        },
-                    })
-                }}
-                style={{
-                    position: "fixed",
-                    left: 100,
-                    top: 20,
-                    zIndex: 999,
-                    padding: "8px 12px",
-                    fontSize: "16px",
-                    color: "white",
+                <button
+                    className="button transparent-shadow control-button"
+                >
+                    +
+                </button>
 
-                }}>
-                {t("world.button.menu")}
-            </button>
+                <button
+                    className="button transparent-shadow control-button"
+                >
+                    −
+                </button>
+
+                <button
+                    className="button transparent-shadow control-button"
+                    onMouseEnter={playHover}
+                    onClick={() => {
+                        playClick();
+                        startTransition("/", {
+                            onMid: () => {
+                                console.log("现在是黑屏，可以切页面");
+                            },
+                            onDone: () => {
+                                console.log("转场完成");
+                            },
+                        });
+                    }}
+                >
+                    {t("world.button.menu")}
+                </button>
+            </div>
+
             <div className="world">
                 <img
                     className="layer world-layer"
