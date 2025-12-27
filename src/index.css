@@ -7,8 +7,9 @@ body {
 }
 
 #root {
-  height: 100vh;
-  width: 100vw;
+  
+  min-height: 100vh;
+  width: 100%;
   --box-bg-color: rgb(88.63% 88.63% 88.63% / 0.45)
 }
 
