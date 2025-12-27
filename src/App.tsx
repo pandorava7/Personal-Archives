@@ -115,7 +115,7 @@ const App: React.FC = () => {
 
               <div className="adjust-in-enter-page absolute bottom-0">
 
-                <LanguageSwitcher direction="right" arrange="up" />
+                <LanguageSwitcher direction="left" arrange="up" />
               </div>
             </div>
 
