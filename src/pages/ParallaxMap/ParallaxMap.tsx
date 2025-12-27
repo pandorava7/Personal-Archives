@@ -10,8 +10,11 @@ import MiniDiamondButton from "../../components/MiniDiamondButton/MiniDiamondBut
 import Line from "../../components/Line/Line";
 import { useSceneTransition } from "../../App";
 import { playClick, playHover } from "../../utils/sfx";
+import { useTranslation } from "react-i18next";
 
 export default function ParallaxMap() {
+
+    const { t } = useTranslation();
 
     const desktopInitialPos = { x: 0, y: -6000 };
     const mobileInitialPos = { x: -650, y: -6000 };
@@ -172,7 +175,7 @@ export default function ParallaxMap() {
                     color: "white",
 
                 }}>
-                回到主页
+                {t("world.button.menu")}
             </button>
             <div className="world">
                 <img
@@ -301,8 +304,8 @@ export default function ParallaxMap() {
                 </div>
             </div>
 
-            <footer>
-                素材来源于 Arcaea 游戏中的 Story Mode 背景图，仅用于学习和展示。如有侵权，请联系告知。
+            <footer className="text-shadow">
+                {t("world.info")}
             </footer>
         </div>
     );

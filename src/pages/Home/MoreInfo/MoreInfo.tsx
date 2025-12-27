@@ -8,11 +8,11 @@ import Image1 from "@/assets/images/minecraft/2.avif";
 import Image2 from "@/assets/images/minecraft/3.avif";
 import Image3 from "@/assets/images/minecraft/4.avif";
 import { useFlashMessage } from '../../../components/FlashMessageContext/FlashMessageContext';
+import { useTranslation } from 'react-i18next';
 
 
 const MoreInfo: React.FC = () => {
-  // const { t } = useTranslation();
-  // const { startTransition } = useSceneTransition();
+  const { t } = useTranslation();
   const { addMessage } = useFlashMessage();
 
   return (
@@ -37,19 +37,19 @@ const MoreInfo: React.FC = () => {
         ></DiamondButton>
 
         <div className='info-area'>
-          <h1 className='text-shadow'>Minecraft 服务器永久开放</h1>
+          <h1 className='text-shadow'>{t("minecraft.title")}</h1>
           <div className='images'>
             <div className='item'>
               <img className='box-sahdow' src={Image1} alt="" />
-              <p>自由建造</p>
+              <p>{t("minecraft.desc1")}</p>
             </div>
             <div className='item'>
               <img src={Image2} alt="" />
-              <p>休闲养老</p>
+              <p>{t("minecraft.desc2")}</p>
             </div>
             <div className='item'>
               <img src={Image3} alt="" />
-              <p>朋友服</p>
+              <p>{t("minecraft.desc3")}</p>
             </div>
           </div>
 

@@ -47,7 +47,7 @@ gap: 10px;
   box-shadow: 0 0px 10px rgba(0,0,0, 0.9);
 }
 
-.item p{
+.images .item p{
   text-align: center;
   margin-top: 5px;
   color: white;
@@ -87,7 +87,7 @@ text-align: center;
     width: 100%
   }
 
-  .item p{
+  .images .item p{
     font-size: 28px;
   }
 }

@@ -3,11 +3,13 @@ import { playHover, playClick } from "../../utils/sfx";
 import SunIcon from "./icons/sun.svg?react";
 import MoonIcon from "./icons/moon.svg?react";
 import "./ThemeSwitcher.css";
+import { useFlashMessage } from "../FlashMessageContext/FlashMessageContext";
 
 type Theme = "light" | "dark";
 
 const ThemeToggle: React.FC = () => {
   const [theme, setTheme] = useState<Theme>("dark");
+  const { addMessage } = useFlashMessage();
 
   // 初始化
   useEffect(() => {
@@ -35,6 +37,7 @@ const ThemeToggle: React.FC = () => {
       onClick={() => {
         playClick();
         toggleTheme();
+        addMessage({ text: "还没做这个功能嘞~", type: "warning" });
       }}
       aria-label="Toggle theme"
     >

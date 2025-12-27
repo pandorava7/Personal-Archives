@@ -4,6 +4,7 @@ import "./Home.css"
 import Dashboard from './Dashboard/Dashboard';
 import Highlights from './Highlights/Highlights';
 import MoreInfo from './MoreInfo/MoreInfo';
+import { useTranslation } from 'react-i18next';
 
 interface HomeProps {
     entered: boolean;
@@ -11,6 +12,7 @@ interface HomeProps {
 
 
 const Home: React.FC<HomeProps> = ({ entered }) => {
+  const { t } = useTranslation();
 
     if (!entered) return null;
 
@@ -20,7 +22,7 @@ const Home: React.FC<HomeProps> = ({ entered }) => {
             <Dashboard />
 
             <div className="section-divider">
-                <h1 className="title text-shadow-white">精彩瞬间</h1>
+                <h1 className="title text-shadow-white">{t("highlight.title1")}</h1>
                 <div className='bar bar1'></div>
                 <div className='relative'>
                     <div className='bar bar2'></div>

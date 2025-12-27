@@ -8,9 +8,11 @@ import CenterImage from "@/assets/images/highlight/2.png"
 import RightImage from "@/assets/images/highlight/3.png"
 import DiamondButton from '../../../components/DiamondButton/DiamondButton';
 import { playClick, playHover } from '../../../utils/sfx';
+import { useTranslation } from 'react-i18next';
 
 const Highlights: React.FC = () => {
   const { startTransition } = useSceneTransition();
+  const { t } = useTranslation();
 
   return (
     <div className="highlight-container">
@@ -24,13 +26,13 @@ const Highlights: React.FC = () => {
       />
 
       <div className="content">
-        <h1 className='title2'>值得纪念的一瞬间</h1>
-        <h1 className='title3 text-shadow'>值得纪念的一瞬间</h1>
+        <h1 className='title2'>{t("highlight.title2")}</h1>
+        <h1 className='title3 text-shadow'>{t("highlight.title2")}</h1>
         <div className='center-box'>
           <div className='description-area'>
-            <p>用简短的笔墨</p>
-            <p>记录下这段人生旅程中的点点滴滴</p>
-            <p>那是曾经的自己，留待未来想念</p>
+            <p>{t("highlight.desc1")}</p>
+            <p>{t("highlight.desc2")}</p>
+            <p>{t("highlight.desc3")}</p>
             {/* <div className="normal-button transparent-shadow">
               <span className="button-text">记忆迴廊</span>
             </div> */}
@@ -88,10 +90,10 @@ const Highlights: React.FC = () => {
             <div className="capsule" onMouseEnter={playHover}>
               <div className="capsule-inner">
                 <div className="capsule-text">
-                  <p className="desc">这是一个关于这个瞬间的简短介绍</p>
+                  <p className="desc">{t("highlight.item1_desc")}</p>
                   <div className="normal-button transparent-shadow"
                     onMouseEnter={playHover} onClick={() => { playClick(); }}>
-                    <span className="button-text">解锁</span>
+                    <span className="button-text">{t("highlight.unlock_button")}</span>
                   </div>
                 </div>
                 <div className="capsule-image">
@@ -103,10 +105,10 @@ const Highlights: React.FC = () => {
             <div className="capsule" onMouseEnter={playHover}>
               <div className="capsule-inner">
                 <div className="capsule-text">
-                  <p className="desc">这是一个关于这个瞬间的简短介绍</p>
+                  <p className="desc">{t("highlight.item2_desc")}</p>
                   <div className="normal-button transparent-shadow"
                     onMouseEnter={playHover} onClick={() => { playClick(); }}>
-                    <span className="button-text">解锁</span>
+                    <span className="button-text">{t("highlight.unlock_button")}</span>
                   </div>
                 </div>
                 <div className="capsule-image">
@@ -118,10 +120,10 @@ const Highlights: React.FC = () => {
             <div className="capsule" onMouseEnter={playHover}>
               <div className="capsule-inner">
                 <div className="capsule-text">
-                  <p className="desc">这是一个关于这个瞬间的简短介绍</p>
+                  <p className="desc">{t("highlight.item3_desc")}</p>
                   <div className="normal-button transparent-shadow"
                     onMouseEnter={playHover} onClick={() => { playClick(); }}>
-                    <span className="button-text">解锁</span>
+                    <span className="button-text">{t("highlight.unlock_button")}</span>
                   </div>
                 </div>
                 <div className="capsule-image">
