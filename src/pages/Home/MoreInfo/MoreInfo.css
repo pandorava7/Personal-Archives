@@ -1,0 +1,93 @@
+.moreinfo-container {
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+}
+
+.section {
+  height: auto;
+}
+
+.section.minecraft {
+  height: 500px;
+  background-color: white;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url(/src/assets/images/minecraft/1.avif);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  gap:100px;
+  padding: 0 50px;
+}
+
+.info-area{
+  display: flex;
+  flex-direction: column;
+  gap:20px;
+}
+
+.info-area h1{
+  font-size: 32px;
+  color: white;
+}
+
+.images{
+display: flex;
+flex-direction: row;
+gap: 10px;
+}
+
+
+.item img {
+  width: 200px;
+  border-radius: 20px;
+  box-shadow: 0 0px 10px rgba(0,0,0, 0.9);
+}
+
+.item p{
+  text-align: center;
+  margin-top: 5px;
+  color: white;
+  font-size: 1.2rem;
+}
+
+@media screen and (max-width: 800px) {
+  .section.minecraft{
+    flex-direction: column;
+    height: 700px;
+  }
+}
+
+@media screen and (max-width: 650px) {
+
+    .section.minecraft{
+    height: auto;
+    padding: 200px 0;
+  }
+
+  .info-area{
+    justify-content: center;
+    align-items: center;
+  }
+
+  .info-area h1{
+text-align: center;
+  }
+
+  .info-area .images{
+    flex-direction: column;
+    align-items: center;
+    width: 90%;
+  }
+
+  .images img{
+    width: 100%
+  }
+
+  .item p{
+    font-size: 28px;
+  }
+}

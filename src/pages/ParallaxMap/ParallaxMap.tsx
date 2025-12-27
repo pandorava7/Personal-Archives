@@ -9,10 +9,17 @@ import World from "@/assets/images/layer/world2.jpg";
 import MiniDiamondButton from "../../components/MiniDiamondButton/MiniDiamondButton";
 import Line from "../../components/Line/Line";
 import { useSceneTransition } from "../../App";
+import { playClick, playHover } from "../../utils/sfx";
 
 export default function ParallaxMap() {
-    const initialPos = { x: 0, y: -6000 };
-    const [pos, setPos] = useState(initialPos);
+
+    const desktopInitialPos = { x: 0, y: -6000 };
+    const mobileInitialPos = { x: -650, y: -6000 };
+    const isTouchDevice =
+        'ontouchstart' in window ||
+        navigator.maxTouchPoints > 0;
+
+    const [pos, setPos] = useState(isTouchDevice ? mobileInitialPos : desktopInitialPos);
     const [dragSpeedIndex, setDragSpeedIndex] = useState(3); // 初始为 2.0
     const velocity = useRef({ x: 0, y: 0 });
     const dragging = useRef(false);
@@ -126,6 +133,10 @@ export default function ParallaxMap() {
         >
             {/* 左上角固定按钮 */}
             <button className="button transparent-shadow"
+                onMouseEnter={playHover} onClick={() => {
+                    playClick();
+                    toggleSpeed();
+                }}
                 style={{
                     position: "fixed",
                     left: 20,
@@ -136,11 +147,21 @@ export default function ParallaxMap() {
                     color: "white",
 
                 }}
-                onClick={toggleSpeed}
             >
                 {dragSpeeds[dragSpeedIndex].toFixed(1)}
             </button>
             <button className="button transparent-shadow"
+                onMouseEnter={playHover} onClick={() => {
+                    playClick();
+                    startTransition("/", {
+                        onMid: () => {
+                            console.log("现在是黑屏，可以切页面");
+                        },
+                        onDone: () => {
+                            console.log("转场完成");
+                        },
+                    })
+                }}
                 style={{
                     position: "fixed",
                     left: 100,
@@ -150,19 +171,8 @@ export default function ParallaxMap() {
                     fontSize: "16px",
                     color: "white",
 
-                }}
-                 onClick={() =>
-                startTransition("/", {
-                    onMid: () => {
-                        console.log("现在是黑屏，可以切页面");
-                    },
-                    onDone: () => {
-                        console.log("转场完成");
-                    },
-                })
-
-            }>
-回到主页
+                }}>
+                回到主页
             </button>
             <div className="world">
                 <img

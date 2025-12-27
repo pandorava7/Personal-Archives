@@ -5,9 +5,9 @@ import { useTranslation } from "react-i18next";
 import DiamondButton from "./components/DiamondButton/DiamondButton";
 import LanguageSwitcher from "./components/LanguageSwitcher/LanguageSwitcher";
 import SceneTransition from "./components/SceneTransition/SceneTransition";
-import Home from "./pages/Home/Home";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import ParallaxMap from "./pages/ParallaxMap/ParallaxMap";
+import Home from "./pages/Home/Home";
 
 export type TransitionOptions = {
   to: string;
@@ -97,7 +97,7 @@ const App: React.FC = () => {
 
           <div className="absolute z-10 flex flex-col items-center bottom-0 mb-10 w-full">
             <div className="relative">
-              <DiamondButton bg={1} _className="-right-19"
+              <DiamondButton bg={1} _className="absolute -right-19 bottom-25"
                 onClick={() =>
                   startTransition("/", {
                     onMid: () => {

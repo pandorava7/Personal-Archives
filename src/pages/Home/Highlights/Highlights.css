@@ -1,0 +1,251 @@
+html,
+body {
+    overflow-x: hidden;
+}
+
+.highlight-container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* 背景视频 */
+.bg-video {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    z-index: -1;
+
+    will-change: transform;
+}
+
+
+/* 前景内容 */
+.content {
+    position: relative;
+    z-index: 1;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0;
+}
+
+.title2 {
+    position: absolute;
+    right: 30%;
+    top: 10%;
+    color: white;
+    font-size: 45px;
+    background: #000000;
+    background: linear-gradient(to right, #737373 0%, white 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    z-index: 2;
+}
+
+.title3 {
+    position: absolute;
+    right: 30%;
+    top: 10%;
+    color: black;
+    font-size: 45px;
+    z-index: 1;
+}
+
+.description-area {
+    position: relative;
+    /* 或直接去掉 absolute */
+    flex-shrink: 0;
+    /* 不被压缩 */
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    justify-content: center;
+    align-items: center;
+}
+
+.description-area p {
+    color: white;
+    font-size: 20px;
+}
+
+.description-area .normal-button {
+    margin-top: 20px;
+}
+
+.center-box {
+    display: flex;
+    gap: 40px;
+    /* 控制文字区和胶囊区间距 */
+    position: absolute;
+    left: 50%;
+    top: 40%;
+    transform: translate(-50%, -50%);
+    width: auto;
+    min-width: 60%;
+    height: 70%;
+    justify-content: center;
+    align-items: center;
+}
+
+.items {
+    display: flex;
+    gap: 24px;
+    justify-content: flex-end;
+}
+
+/* 胶囊整体 */
+.capsule {
+    width: 120px;
+    /* 默认窄 */
+    height: 420px;
+    border-radius: 60px;
+    overflow: hidden;
+    background: rgba(88.63% 88.63% 88.63% / 45%);
+    transition: width .5s ease;
+    cursor: pointer;
+    outline: white 4px solid;
+    display: flex;
+}
+
+.capsule:hover {
+    width: 400px;
+    /* hover 拉长后的固定宽度 */
+}
+
+/* 内部横向结构 */
+.capsule-inner {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+    justify-content: flex-end;
+}
+
+/* 左侧文字区 */
+.capsule-text {
+    width: 200px;
+    /* hover 后固定宽度 */
+    padding: 32px 28px;
+    box-sizing: border-box;
+    color: #fff;
+    opacity: 0;
+    transform: translateX(-20px);
+    transition:
+        opacity .5s ease,
+        transform .5s ease;
+    flex-shrink: 0;
+    /* 防止缩小 */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 24px;
+    position: absolute;
+    /* 默认不占 flex 布局空间 */
+    left: 0;
+    top: 0;
+    height: 100%;
+    pointer-events: none;
+}
+
+.capsule:hover .capsule-text {
+    opacity: 1;
+    transform: translateX(0);
+    position: absolute;
+    /* hover 后占据布局空间 */
+    pointer-events: auto;
+}
+
+
+/* 右侧图片区 */
+.capsule-image {
+    width: 120px;
+    /* 默认宽度 */
+    max-width: 200px;
+    /* hover 最大宽度 */
+    overflow: hidden;
+    transition: width 0.5s ease;
+    /* 宽度过渡 */
+    flex-shrink: 0;
+    /* 防止被压缩 */
+}
+
+.capsule:hover .capsule-image {
+    width: 200px;
+    /* hover 拉伸到 200px */
+}
+
+
+.capsule-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+/* hover 时图片稍微拉伸 */
+.capsule:hover .capsule-image img {
+    transform: scale(1.1);
+}
+
+/* 文本 */
+.desc {
+    font-size: 18px;
+    line-height: 1.5;
+}
+
+.items .capsule:nth-child(1) {
+    transform: translateY(100px);
+}
+
+.items .capsule:nth-child(2) {
+    transform: translateY(50px);
+}
+
+.items .capsule:nth-child(3) {
+    transform: translateY(0px);
+}
+
+
+@media screen and (max-width: 1100px) {
+    .center-box {
+        flex-direction: column;
+        margin-top: 200px;
+    }
+
+       .highlight-container {
+        height: 1100px;
+    }
+
+    .title3, .title2{
+        display: none;
+    }
+
+    .center-box{
+        padding-bottom: 400px;
+    }
+
+    .items .capsule:nth-child(1) {
+        transform: translateY(200px);
+    }
+
+    .items .capsule:nth-child(2) {
+        transform: translateY(250px);
+    }
+
+    .items .capsule:nth-child(3) {
+        transform: translateY(200px);
+    }
+}
+
+@media screen and (max-width: 650px) {
+.title{
+right:0;
+font-size: 28px;
+}
+}

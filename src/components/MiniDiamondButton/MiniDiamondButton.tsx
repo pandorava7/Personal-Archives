@@ -4,6 +4,7 @@ import styles from "./MiniDiamondButton.module.css";
 // …根据需要导入所有图片
 import img1 from '/src/assets/images/world-bg/1.png';
 import img2 from '/src/assets/images/world-bg/2.png';
+import { playClick, playHover } from "../../utils/sfx";
 
 interface MiniDiamondButtonProps {
     onClick?: () => void;
@@ -25,8 +26,12 @@ const MiniDiamondButton: React.FC<MiniDiamondButtonProps> = ({
 
     return (
         <button
+            onMouseEnter={playHover }
+              onClick={() => {
+                playClick();      // 播放点击音效
+                if (onClick) onClick();  // 调用用户传入的回调
+              }}
             className={`${styles.diamondButton} ${_className}`}
-            onClick={onClick}
             style={{ width: size, height: size, backgroundImage: `url(${bgUrl})` }}
         >
             <span className={styles.diamondContent}>{children}</span>

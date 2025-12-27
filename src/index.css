@@ -12,6 +12,30 @@ body {
   --box-bg-color: rgb(88.63% 88.63% 88.63% / 0.45)
 }
 
+/* 滚动条整体 */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* 滚动条背景 */
+::-webkit-scrollbar-track {
+  background: white;
+}
+
+/* 滚动条滑块（handler） */
+::-webkit-scrollbar-thumb {
+  background: #b2fbff;
+  border-radius: 6px;
+}
+
+/* hover 状态 */
+::-webkit-scrollbar-thumb:hover {
+  background: #6a8aff;
+}
+
+
+
+
 /* 主题 */
 :root.theme-light {
   --bg-color: #ffffff;
@@ -59,6 +83,7 @@ body {
   transition: transform 0.2s ease;
   cursor: pointer;
   align-items: center;
+  width: fit-content;
 }
 
 .button:hover {
@@ -73,14 +98,52 @@ body {
   flex-shrink: 0;
 }
 
+.normal-button {
+  padding: 0.5rem 2rem;
+  border-radius: 9999px;
+  box-shadow: 0 0px 20px rgba(255,255,255, 0.9);
+  transition: transform 0.2s ease;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+}
+
+.normal-button:hover {
+  transform: scale(1.1); /* 整个按钮放大 */
+}
+
+/* 文字单独渐变 */
+.button-text {
+  display: inline-block;
+  transition: transform 0.2s ease; 
+}
+
+.normal-button:hover .button-text {
+  transform: scale(1.2); /* 文字放大 */
+}
+
+
 .transparent-shadow {
   background-color: transparent;
   box-shadow: 0 0px 10px rgba(255,255,255, 0.9);
   color: white;
 }
 
+.box-shadow{
+  box-shadow: 0 0px 10px rgba(0,0,0, 0.9);
+}
+
+.box-shadow-lg{
+  box-shadow: 0 0px 50px rgba(0,0,0, 0.9);
+}
+
 .text-shadow {
   text-shadow: 0 0 10px rgba(0, 0, 0, 0.9);
+}
+
+.text-shadow-white {
+  text-shadow: 0 0 10px rgba(255,255,255, 0.5);
 }
 
 .text-shadow-sm {

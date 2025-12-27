@@ -5,11 +5,14 @@ import './assets/styles/fonts.css'
 import App from './App.tsx'
 import "./i18n";
 import { BrowserRouter } from 'react-router-dom'
+import { FlashMessageProvider } from './components/FlashMessageContext/FlashMessageContext.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
-      <App />
+      <FlashMessageProvider>
+        <App />
+      </FlashMessageProvider>
     </BrowserRouter>
   </StrictMode>
 )
