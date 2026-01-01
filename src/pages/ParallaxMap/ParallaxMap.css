@@ -9,12 +9,14 @@
 
 /* 地图主容器 */
 .map-container {
-  position: absolute; /* 改变为绝对定位 */
+  position: absolute;
+  /* 改变为绝对定位 */
   top: 50%;
   left: 50%;
   width: 2000px;
   height: 2000px;
-  margin-left: -1000px; /* 偏移回一半，确保初始居中 */
+  margin-left: -1000px;
+  /* 偏移回一半，确保初始居中 */
   margin-top: -1000px;
   transform-origin: center center;
   will-change: transform;
@@ -25,9 +27,12 @@
   position: absolute;
   width: 100%;
   height: 100%;
-  pointer-events: none; /* 默认穿透，不影响底层交互 */
-  user-select: none;       /* 禁止文字/图片选中 */
-  -webkit-user-drag: none; /* 禁止图片拖动 */
+  pointer-events: none;
+  /* 默认穿透，不影响底层交互 */
+  user-select: none;
+  /* 禁止文字/图片选中 */
+  -webkit-user-drag: none;
+  /* 禁止图片拖动 */
 }
 
 .layer img {
@@ -49,23 +54,34 @@
   height: 100%;
 }
 
-/* 缩放按钮样式 */
-.zoom-controls {
-  position: absolute;
-  bottom: 30px;
-  left: 50%;
-  transform: translateX(-50%);
+.control-buttons {
   display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   gap: 10px;
-  z-index: 100; /* 确保在最上层 */
+  position: absolute;
+  left: 30px;
+  bottom: 30px;
+}
+
+/* 缩放按钮样式 */
+.control {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 0;
+  gap: 10px;
+  z-index: 100;
+  /* 确保在最上层 */
   background: rgba(0, 0, 0, 0.6);
   padding: 10px 20px;
   border-radius: 30px;
   backdrop-filter: blur(5px);
   border: 1px solid rgba(255, 255, 255, 0.2);
+  height: 50px;
 }
 
-.zoom-controls button {
+.control button {
   background: transparent;
   border: none;
   color: white;
@@ -77,11 +93,88 @@
   font-size: 14px;
 }
 
-.zoom-controls button.active {
+.control button.active {
   background: #fff;
   color: #000;
 }
 
-.zoom-controls button:hover:not(.active) {
+.control button:hover:not(.active) {
   background: rgba(255, 255, 255, 0.2);
+}
+
+.volume-container {
+  display: 'flex';
+  align-items: 'center';
+  gap: '10px';
+  padding: '10px';
+  background: 'rgba(255, 255, 255, 0.1)';
+  border-radius: '8px';
+  width: 'fit-content';
+}
+
+.slider {
+  cursor: 'pointer';
+  accent-color: '#4CAF50';
+}
+
+/* 如果不使用 Tailwind，可以参考这个样式 */
+.slider {
+  -webkit-appearance: none;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 2px;
+  outline: none;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px;
+  height: 12px;
+  background: #3b82f6;
+  /* 蓝色 */
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.1s;
+}
+
+.slider::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+}
+
+.icon {
+  font-size: 18px;
+}
+
+.label {
+  font-size: 14px;
+  min-width: 35px;
+  color: #fff;
+  text-align: center;
+}
+
+/* 手机端样式 */
+@media (max-width: 600px) {
+  /* 1. 让控制条内的按钮垂直排列 */
+  .control {
+    flex-direction: column; /* 关键：横向变纵向 */
+    height: auto;           /* 关键：取消固定高度，让内容撑开 */
+    width: auto;            /* 手机端通常需要固定一个宽度 */
+    padding: 20px 10px;     /* 调整间距 */
+    border-radius: 25px;    /* 调整圆角 */
+  }
+
+  /* 2. 如果音量条容器也需要变垂直 */
+  .volume-container {
+    flex-direction: column-reverse; /* 音量条建议反向排列，图标在下，拉条在上 */
+    align-items: center;
+  }
+
+  /* 3. 针对 input range 旋转（仅旋转滑条本身） */
+  .slider {
+    /* 在 flex 容器里旋转 input 比较麻烦，建议通过设置 writing-mode 或单独旋转 */
+    appearance: slider-vertical; 
+    width: 4px;
+    height: 80px;
+    margin: 10px 0;
+  }
 }

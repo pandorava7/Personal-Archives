@@ -1,5 +1,6 @@
 import React, { type CSSProperties, useState, useRef, useEffect, useCallback } from "react";
 import "./ParallaxMap.css";
+import { Volume, Volume1, Volume2, VolumeOff, Home, Gauge } from 'lucide-react';
 
 // 资源导入...
 import Flower1 from "@/assets/images/layer/act2_flower1.png";
@@ -9,8 +10,12 @@ import Shards2 from "@/assets/images/layer/act2_shards2.png";
 import World from "@/assets/images/layer/world2.jpg";
 import Line from "../../components/Line/Line";
 import MiniDiamondButton from "../../components/MiniDiamondButton/MiniDiamondButton";
+import { useMusic } from "../../components/AudioContext/AudioContext";
+import { useSceneTransition } from "../../App";
 
 const SPEEDS = { world: 0.1, flower1: 0.12, shards1: 0.14, shards2: 0.15, flower2: 0.16, ui: 0.5 };
+// 定义速度倍率选项
+const SPEED_MULTIPLIERS = [1, 1.5, 2, 3];
 const SCALE_OPTIONS = [0.8, 1, 1.2];
 // 权重越大，随着 currentScale 变化时，该层放大/缩小的幅度越明显
 const SCALE_FACTORS = {
@@ -20,6 +25,14 @@ const SCALE_FACTORS = {
 const CONTENT_SIZE = { width: 2000, height: 2000 };
 
 const ParallaxMap: React.FC = () => {
+    const { startTransition } = useSceneTransition();
+    const { volume, adjustVolume } = useMusic();
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const nextVolume = parseFloat(e.target.value);
+        adjustVolume(nextVolume);
+    };
+
     const [offset, setOffset] = useState({ x: 0, y: 0 });
     const [currentScale, setCurrentScale] = useState(1);
 
@@ -27,6 +40,16 @@ const ParallaxMap: React.FC = () => {
     const lastPos = useRef({ x: 0, y: 0 });
     const velocity = useRef({ x: 0, y: 0 });
     const requestRef = useRef<number>(0);
+
+    const [moveSpeedMultiplier, setMoveSpeedMultiplier] = useState(1);
+
+    // 切换速度函数
+    const toggleMoveSpeed = () => {
+        setMoveSpeedMultiplier(prev => {
+            const currentIndex = SPEED_MULTIPLIERS.indexOf(prev);
+            return SPEED_MULTIPLIERS[(currentIndex + 1) % SPEED_MULTIPLIERS.length];
+        });
+    };
 
     // 【核心：边界限制计算】
     // 我们根据位移最大的层(ui或flower2)来计算偏移极限，确保它不会露出边缘
@@ -94,10 +117,13 @@ const ParallaxMap: React.FC = () => {
         velocity.current = { x: 0, y: 0 };
     };
 
+    // 修改 handleMove：应用速度倍率
     const handleMove = (clientX: number, clientY: number) => {
         if (!isDragging.current) return;
-        const dx = clientX - lastPos.current.x;
-        const dy = clientY - lastPos.current.y;
+
+        // 核心修改：将鼠标位移乘以倍率
+        const dx = (clientX - lastPos.current.x) * moveSpeedMultiplier;
+        const dy = (clientY - lastPos.current.y) * moveSpeedMultiplier;
 
         velocity.current = { x: dx, y: dy };
         setOffset((prev) => {
@@ -165,6 +191,17 @@ const ParallaxMap: React.FC = () => {
     //     handleZoom(nextScale);
     // };
 
+    // 动态渲染图标的逻辑
+    // 在 renderIcon 函数里
+    const renderIcon = () => {
+        const iconProps = { size: 20, color: "#ffffff" }; // 设置大小和颜色
+
+        if (volume === 0) return <VolumeOff {...iconProps} />;
+        if (volume < 0.3) return <Volume {...iconProps} />;
+        if (volume < 0.7) return <Volume1 {...iconProps} />;
+        return <Volume2 {...iconProps} />;
+    };
+
     return (
         <div
             className="map-viewport"
@@ -176,21 +213,66 @@ const ParallaxMap: React.FC = () => {
             onTouchMove={(e) => handleMove(e.touches[0].clientX, e.touches[0].clientY)}
             onTouchEnd={() => (isDragging.current = false)}
         >
-            <div className="zoom-controls">
-                {SCALE_OPTIONS.map((s) => (
-                    // 修改 zoom-controls 里的 onClick
+            <div className="control-buttons">
+                {/* 1. 音量控制 (原有) */}
+                <div className="control">
+
+                    <div className="volume-container flex items-center gap-3">
+                        {/* 点击图标可以快速静音/取消静音 */}
+                        <div
+                            className="icon cursor-pointer hover:text-blue-400 transition-colors"
+                            onClick={() => adjustVolume(volume > 0 ? 0 : 0.5)}
+                        >
+                            {renderIcon()}
+                        </div>
+                        <input
+                            type="range"
+                            min="0"
+                            max="1"
+                            step="0.01"
+                            value={volume}
+                            onChange={handleChange}
+                            className="slider w-24 accent-blue-500 cursor-pointer"
+                        />
+                        <span className="label text-xs font-mono w-8 text-white/80">
+                            {Math.round(volume * 100)}%
+                        </span>
+                    </div>
+                </div>
+
+                {/* 2. 缩放控制 (原有) */}
+                <div className="control">
+                    {SCALE_OPTIONS.map((s) => (
+                        <button key={s} className={currentScale === s ? "active" : ""} onClick={(e) => { e.stopPropagation(); handleZoom(s); }}>
+                            {s * 100}%
+                        </button>
+                    ))}
+                </div>
+
+                <div className="control">
+                    {/* Home 按钮 */}
                     <button
-                        key={s}
-                        className={currentScale === s ? "active" : ""}
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            handleZoom(s); // 使用统一的缩放函数
-                        }}
+                        className="p-2 flex items-center justify-center hover:bg-white/20 transition-colors"
+                        onClick={(e) => { e.stopPropagation(); startTransition("/") }}
+                        title="回到中心"
                     >
-                        {s * 100}%
+                        <Home size={20} color="#ffffff" />
                     </button>
-                ))}
+                </div>
+
+                <div className="control">
+                    {/* 速度倍率切换按钮 */}
+                    <button
+                        className="p-2 flex items-center gap-2 hover:bg-white/20 transition-colors min-w-[70px]"
+                        onClick={(e) => { e.stopPropagation(); toggleMoveSpeed(); }}
+                        title="切换拖拽速度"
+                    >
+                        <Gauge size={20} color={moveSpeedMultiplier > 1 ? "#60a5fa" : "#ffffff"} />
+                        <span className="text-xs font-mono text-white">x{moveSpeedMultiplier}</span>
+                    </button>
+                </div>
             </div>
+
 
             <div
                 className="map-container"

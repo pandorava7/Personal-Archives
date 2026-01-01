@@ -140,27 +140,51 @@ const Dashboard: React.FC = () => {
           <div className='tools-area relative'>
             <p className='gradient-text text-2xl'>{t("common.tool_box")}</p>
             <div className='box rd-large'>
-              <div className="box rd-medium" onClick={
-                () =>
+              <a
+                href="/cc" // 允许右键“在新标签页打开”
+                className="box rd-medium block no-underline" // 记得加 block 保持布局
+                onClick={(e) => {
+                  // 阻止浏览器默认的跳转行为，让 startTransition 控制跳转
+                  e.preventDefault();
+
                   startTransition("/cc", {
-                    onMid: () => {},
-                    onDone: () => {},
-                  })
-              }>汇率</div>
-              <div className="box rd-medium"  onClick={
-                () =>
-                  startTransition("/wheel", {
-                    onMid: () => {},
-                    onDone: () => {},
-                  })
-              }>转盘</div>
-              <div className="box rd-medium"   onClick={
-                () =>
-                  startTransition("/habit", {
-                    onMid: () => {},
-                    onDone: () => {},
-                  })
-              }>日常</div>
+                    onMid: () => { },
+                    onDone: () => { },
+                  });
+                }}
+              >
+                汇率
+              </a>
+              <a
+                href="/wheel" // 允许右键“在新标签页打开”
+                className="box rd-medium block no-underline" // 记得加 block 保持布局
+                onClick={(e) => {
+                  // 阻止浏览器默认的跳转行为，让 startTransition 控制跳转
+                  e.preventDefault();
+
+                  startTransition("/cc", {
+                    onMid: () => { },
+                    onDone: () => { },
+                  });
+                }}
+              >
+                转盘
+              </a>
+              <a
+                href="/habit" // 允许右键“在新标签页打开”
+                className="box rd-medium block no-underline" // 记得加 block 保持布局
+                onClick={(e) => {
+                  // 阻止浏览器默认的跳转行为，让 startTransition 控制跳转
+                  e.preventDefault();
+
+                  startTransition("/cc", {
+                    onMid: () => { },
+                    onDone: () => { },
+                  });
+                }}
+              >
+                日常
+              </a>
               <div className="box rd-medium"></div>
               <div className="box rd-medium"></div>
               <div className="box rd-medium"></div>

@@ -6,12 +6,15 @@ import App from './App.tsx'
 import "./i18n";
 import { BrowserRouter } from 'react-router-dom'
 import { FlashMessageProvider } from './components/FlashMessageContext/FlashMessageContext.tsx'
+import { MusicProvider } from './components/AudioContext/AudioContext.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
       <FlashMessageProvider>
-        <App />
+        <MusicProvider>
+          <App />
+        </MusicProvider>
       </FlashMessageProvider>
     </BrowserRouter>
   </StrictMode>

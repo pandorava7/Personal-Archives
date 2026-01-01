@@ -9,8 +9,11 @@ import RightImage from "@/assets/images/highlight/3.png"
 import DiamondButton from '../../../components/DiamondButton/DiamondButton';
 import { playClick, playHover } from '../../../utils/sfx';
 import { useTranslation } from 'react-i18next';
+import { useMusic } from '../../../components/AudioContext/AudioContext';
+import { ASSET_BASE_URL } from '../../../config/assets';
 
 const Highlights: React.FC = () => {
+  const { playMusic } = useMusic();
   const { startTransition } = useSceneTransition();
   const { t } = useTranslation();
 
@@ -48,6 +51,7 @@ const Highlights: React.FC = () => {
                     },
                     onDone: () => {
                       console.log("转场完成");
+                      playMusic(`${ASSET_BASE_URL}/media/story_full.ogg`);
                     },
                   })
 
@@ -63,6 +67,7 @@ const Highlights: React.FC = () => {
                     },
                     onDone: () => {
                       console.log("转场完成");
+                      playMusic(`${ASSET_BASE_URL}/media/story_full.ogg`);
                     },
                   })
 
@@ -78,6 +83,7 @@ const Highlights: React.FC = () => {
                     },
                     onDone: () => {
                       console.log("转场完成");
+                      playMusic(`${ASSET_BASE_URL}/media/story_full.ogg`);
                     },
                   })
 
