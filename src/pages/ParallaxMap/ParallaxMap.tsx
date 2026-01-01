@@ -1,234 +1,226 @@
-import { useRef, useState, useEffect } from "react";
+import React, { type CSSProperties, useState, useRef, useEffect, useCallback } from "react";
 import "./ParallaxMap.css";
+
+// 资源导入...
 import Flower1 from "@/assets/images/layer/act2_flower1.png";
 import Flower2 from "@/assets/images/layer/act2_flower2.png";
 import Shards1 from "@/assets/images/layer/act2_shards1.png";
 import Shards2 from "@/assets/images/layer/act2_shards2.png";
 import World from "@/assets/images/layer/world2.jpg";
-// import DiamondButton from "../../components/DiamondButton/DiamondButton";
-import MiniDiamondButton from "../../components/MiniDiamondButton/MiniDiamondButton";
 import Line from "../../components/Line/Line";
-import { useSceneTransition } from "../../App";
-import { playClick, playHover } from "../../utils/sfx";
-import { useTranslation } from "react-i18next";
+import MiniDiamondButton from "../../components/MiniDiamondButton/MiniDiamondButton";
 
-export default function ParallaxMap() {
+const SPEEDS = { world: 0.1, flower1: 0.12, shards1: 0.14, shards2: 0.15, flower2: 0.16, ui: 0.5 };
+const SCALE_OPTIONS = [0.8, 1, 1.2];
+// 权重越大，随着 currentScale 变化时，该层放大/缩小的幅度越明显
+const SCALE_FACTORS = {
+    world: 0.1, flower1: 0.12, shards1: 0.14, shards2: 0.15, flower2: 0.16, ui: 0.5
+};
+// 假设你的设计稿/原始图片尺寸
+const CONTENT_SIZE = { width: 2000, height: 2000 };
 
-    const { t } = useTranslation();
+const ParallaxMap: React.FC = () => {
+    const [offset, setOffset] = useState({ x: 0, y: 0 });
+    const [currentScale, setCurrentScale] = useState(1);
 
-    const desktopInitialPos = { x: 0, y: -6000 };
-    const mobileInitialPos = { x: -650, y: -6000 };
-    const isTouchDevice =
-        'ontouchstart' in window ||
-        navigator.maxTouchPoints > 0;
-
-    const [pos, setPos] = useState(isTouchDevice ? mobileInitialPos : desktopInitialPos);
-    const [dragSpeedIndex, setDragSpeedIndex] = useState(3); // 初始为 2.0
+    const isDragging = useRef(false);
+    const lastPos = useRef({ x: 0, y: 0 });
     const velocity = useRef({ x: 0, y: 0 });
-    const dragging = useRef(false);
-    const last = useRef({ x: 0, y: 0 });
+    const requestRef = useRef<number>(0);
 
-    const screenWidth = window.innerWidth;
+    // 【核心：边界限制计算】
+    // 我们根据位移最大的层(ui或flower2)来计算偏移极限，确保它不会露出边缘
+    const getBoundaries = useCallback(() => {
+        const vh = window.innerHeight;
+        const vw = window.innerWidth;
 
-    const speedOptions = [0.5, 1, 2, 4, 8];
-    const dragSpeeds = speedOptions;
+        // 计算缩放后的实际图片尺寸 (以最上层或基准层为例)
+        // 注意：这里要考虑 scale 对边界的影响
+        const scaledW = CONTENT_SIZE.width * currentScale;
+        const scaledH = CONTENT_SIZE.height * currentScale;
 
-    const desktopWidth = 1536;
-    const mobileWidth = 390;
+        // 最大速度系数，用于计算位移极限
+        const maxSpeed = SPEEDS.flower2;
 
-    const desktopDrag = 0.4;
-    const desktopWorldWidth = 6100;
-    const desktopWorldHeight = 13000;
+        // 允许滑动的物理像素半径
+        // 逻辑：(图片缩放后的宽度 - 视口宽度) / 2 / 速度系数
+        // 除以速度系数是因为我们要控制的是基础 offset，而实际位移是 offset * speed
+        const limitX = Math.max(0, (scaledW - vw) / 2 / maxSpeed);
+        const limitY = Math.max(0, (scaledH - vh) / 2 / maxSpeed);
 
-    const mobileDrag = 1;
-    const mobileWorldWidth = 16000;
-    const mobileWorldHeight = 14000;    
+        return { limitX, limitY };
+    }, [currentScale]);
 
-    // 线性插值
-    const drag_multiplier_base = desktopDrag +
-        (screenWidth - desktopWidth) / (mobileWidth - desktopWidth) * (mobileDrag - desktopDrag);
-    const drag_multiplier = drag_multiplier_base * dragSpeeds[dragSpeedIndex];
+    // 辅助函数：限制数值在范围内
+    const clamp = (val: number, min: number, max: number) => Math.max(min, Math.min(max, val));
 
-    const worldWidth = desktopWorldWidth +
-        (screenWidth - desktopWidth) / (mobileWidth - desktopWidth) * (mobileWorldWidth - desktopWorldWidth);
-    const worldHeight = desktopWorldHeight +
-        (screenWidth - desktopWidth) / (mobileWidth - desktopWidth) * (mobileWorldHeight - desktopWorldHeight);
+    // 更新 Offset 并应用边界限制
+    const updateOffset = useCallback((newX: number, newY: number) => {
+        const { limitX, limitY } = getBoundaries();
+        setOffset({
+            x: clamp(newX, -limitX, limitX),
+            y: clamp(newY, -limitY, limitY)
+        });
+    }, [getBoundaries]);
 
-    const clamp = (value: number, min: number, max: number) =>
-        Math.max(min, Math.min(value, max));
+    // 惯性动画逻辑
+    const animate = useCallback(() => {
+        if (!isDragging.current) {
+            if (Math.abs(velocity.current.x) > 0.01 || Math.abs(velocity.current.y) > 0.01) {
+                velocity.current.x *= 0.92; // 惯性衰减
+                velocity.current.y *= 0.92;
 
-    const drag_multiplier_final = clamp(drag_multiplier, desktopDrag, mobileDrag * 2); // 放宽上限
-    const worldWidth_final = clamp(worldWidth, desktopWorldWidth, mobileWorldWidth);
-    const worldHeight_final = clamp(worldHeight, desktopWorldHeight, mobileWorldHeight);
-
-    const minX = window.innerWidth - worldWidth_final;
-    const maxX = 0;
-    const minY = window.innerHeight - worldHeight_final;
-    const maxY = 0;
+                setOffset((prev) => {
+                    const { limitX, limitY } = getBoundaries();
+                    return {
+                        x: clamp(prev.x + velocity.current.x, -limitX, limitX),
+                        y: clamp(prev.y + velocity.current.y, -limitY, limitY)
+                    };
+                });
+            }
+        }
+        requestRef.current = requestAnimationFrame(animate);
+    }, [getBoundaries]);
 
     useEffect(() => {
-        document.body.style.overflow = "hidden";
-        return () => {
-            document.body.style.overflow = "";
-        };
-    }, []);
+        requestRef.current = requestAnimationFrame(animate);
+        return () => cancelAnimationFrame(requestRef.current);
+    }, [animate]);
 
-    const onDown = (e: React.PointerEvent) => {
-        e.preventDefault();
-        dragging.current = true;
-        last.current = { x: e.clientX, y: e.clientY };
+    // 拖拽处理
+    const handleStart = (clientX: number, clientY: number) => {
+        isDragging.current = true;
+        lastPos.current = { x: clientX, y: clientY };
+        velocity.current = { x: 0, y: 0 };
     };
 
-    const onMove = (e: React.PointerEvent) => {
-        if (!dragging.current) return;
-        const dx = e.clientX - last.current.x;
-        const dy = e.clientY - last.current.y;
+    const handleMove = (clientX: number, clientY: number) => {
+        if (!isDragging.current) return;
+        const dx = clientX - lastPos.current.x;
+        const dy = clientY - lastPos.current.y;
 
-        setPos(p => ({
-            x: clamp(p.x + dx * drag_multiplier_final, minX, maxX),
-            y: clamp(p.y + dy * drag_multiplier_final, minY, maxY)
+        velocity.current = { x: dx, y: dy };
+        setOffset((prev) => {
+            const nextX = prev.x + dx;
+            const nextY = prev.y + dy;
+            const { limitX, limitY } = getBoundaries();
+            return {
+                x: clamp(nextX, -limitX, limitX),
+                y: clamp(nextY, -limitY, limitY)
+            };
+        });
+        lastPos.current = { x: clientX, y: clientY };
+    };
+
+    // 在组件内部定义 handleZoom
+    const handleZoom = (nextScale: number) => {
+        if (nextScale === currentScale) return;
+
+        const ratio = nextScale / currentScale;
+
+        // 更新 offset，使得原本在视野中心的内容在缩放后依然在视野中心
+        // 逻辑：如果图片放大了 1.2 倍，原本的位移也要相应放大，才能对准原来的点
+        setOffset(prev => ({
+            x: prev.x * ratio,
+            y: prev.y * ratio
         }));
 
-        velocity.current = { x: dx * drag_multiplier_final, y: dy * drag_multiplier_final };
-        last.current = { x: e.clientX, y: e.clientY };
+        setCurrentScale(nextScale);
     };
 
-    const onUp = () => {
-        dragging.current = false;
-        requestAnimationFrame(inertiaStep);
+    const getLayerStyle = (layerName: keyof typeof SPEEDS): CSSProperties => {
+        const speed = SPEEDS[layerName];
+        const factor = SCALE_FACTORS[layerName];
+
+        // 计算当前层的独立缩放值
+        // 逻辑：以 1 为基准，根据用户选择的 currentScale 和该层的权重进行增减
+        const layerScale = 1 + (currentScale - 1) * factor;
+
+        return {
+            // 关键：必须在同一个 transform 属性中同时写 translate 和 scale
+            // 且 scale 放在 translate 后面通常视觉效果更稳
+            transform: `translate(${offset.x * speed}px, ${offset.y * speed}px) scale(${layerScale})`,
+
+            zIndex: Math.floor(speed * 100),
+            transition: isDragging.current ? "none" : "transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1)",
+            transformOrigin: "center center", // 确保每一层都绕中心点缩放
+        };
     };
 
-    const inertiaStep = () => {
-        if (dragging.current) return;
+    useEffect(() => {
+        // 每次缩放变化后，强制校验一次边界，防止缩放后露出黑边
+        const { limitX, limitY } = getBoundaries();
+        setOffset(prev => ({
+            x: clamp(prev.x, -limitX, limitX),
+            y: clamp(prev.y, -limitY, limitY)
+        }));
+    }, [currentScale, getBoundaries]);
 
-        velocity.current.x *= 0.95;
-        velocity.current.y *= 0.95;
+    const handleWheel = (e: React.WheelEvent) => {
+        const delta = e.deltaY > 0 ? 0.9 : 1.1; // 缩放系数
+        const nextScale = clamp(currentScale * delta, 0.8, 1.2);
 
-        setPos(p => {
-            let newX = clamp(p.x + velocity.current.x, minX, maxX);
-            let newY = clamp(p.y + velocity.current.y, minY, maxY);
-
-            if (newX === minX || newX === maxX) velocity.current.x = 0;
-            if (newY === minY || newY === maxY) velocity.current.y = 0;
-
-            return { x: newX, y: newY };
-        });
-
-        if (Math.abs(velocity.current.x) > 0.1 || Math.abs(velocity.current.y) > 0.1) {
-            requestAnimationFrame(inertiaStep);
-        }
+        // 如果需要以鼠标为中心缩放，计算会更复杂：
+        // 需要计算鼠标相对于容器中心的坐标，并对 offset 进行反向补偿
+        handleZoom(nextScale);
     };
-
-    const toggleSpeed = () => {
-        setDragSpeedIndex((prev) => (prev + 1) % dragSpeeds.length);
-    };
-
-
-    const { startTransition } = useSceneTransition();
 
     return (
         <div
-            className="viewport"
-            onPointerDown={onDown}
-            onPointerMove={onMove}
-            onPointerUp={onUp}
-            onPointerLeave={onUp}
+            className="map-viewport"
+            onMouseDown={(e) => handleStart(e.clientX, e.clientY)}
+            onMouseMove={(e) => handleMove(e.clientX, e.clientY)}
+            onMouseUp={() => (isDragging.current = false)}
+            onMouseLeave={() => (isDragging.current = false)}
+            onTouchStart={(e) => handleStart(e.touches[0].clientX, e.touches[0].clientY)}
+            onTouchMove={(e) => handleMove(e.touches[0].clientX, e.touches[0].clientY)}
+            onTouchEnd={() => (isDragging.current = false)}
         >
-            {/* 左上角固定按钮 */}
-            <div className="map-controls">
-                <button
-                    className="button transparent-shadow control-button"
-                    onMouseEnter={playHover}
-                    onClick={() => {
-                        playClick();
-                        toggleSpeed();
-                    }}
-                >
-                    {dragSpeeds[dragSpeedIndex].toFixed(1)}
-                </button>
-
-                <button
-                    className="button transparent-shadow control-button"
-                >
-                    +
-                </button>
-
-                <button
-                    className="button transparent-shadow control-button"
-                >
-                    −
-                </button>
-
-                <button
-                    className="button transparent-shadow control-button"
-                    onMouseEnter={playHover}
-                    onClick={() => {
-                        playClick();
-                        startTransition("/", {
-                            onMid: () => {
-                                console.log("现在是黑屏，可以切页面");
-                            },
-                            onDone: () => {
-                                console.log("转场完成");
-                            },
-                        });
-                    }}
-                >
-                    {t("world.button.menu")}
-                </button>
+            <div className="zoom-controls">
+                {SCALE_OPTIONS.map((s) => (
+                    // 修改 zoom-controls 里的 onClick
+                    <button
+                        key={s}
+                        className={currentScale === s ? "active" : ""}
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            handleZoom(s); // 使用统一的缩放函数
+                        }}
+                    >
+                        {s * 100}%
+                    </button>
+                ))}
             </div>
 
-            <div className="world">
-                <img
-                    className="layer world-layer"
-                    src={World}
-                    style={{ transform: `translate(${pos.x * 0.1}px, ${pos.y * 0.1}px)` }}
-                />
-                <img
-                    className="layer flower1-layer"
-                    src={Flower1}
-                    style={{
-                        transform: `translate(${pos.x * 0.12}px, ${pos.y * 0.12}px)`,
-                        position: "absolute", left: 200, top: 0
-                    }}
-                />
-                <img
-                    className="layer shards1-layer"
-                    src={Shards1}
-                    style={{
-                        transform: `translate(${pos.x * 0.14}px, ${pos.y * 0.125}px)`,
-                        position: "absolute", left: 100, top: 1000
-                    }}
-                />
-                <img
-                    className="layer shards2-layer"
-                    src={Shards2}
-                    style={{
-                        transform: `translate(${pos.x * 0.15}px, ${pos.y * 0.14}px)`,
-                        position: "absolute", left: 100, top: 1200
-                    }}
-                />
-                <img
-                    className="layer flower2-layer"
-                    src={Flower2}
-                    style={{
-                        transform: `translate(${pos.x * 0.16}px, ${pos.y * 0.16}px)`,
-                        position: "absolute", left: 300, top: 0
-                    }}
-                />
-
-
-
-                {/* 顶层自由内容 */}
-                <div
-                    className="ui"
-                    style={{ transform: `translate(${pos.x * 0.5}px, ${pos.y * 0.5}px)` }}
-                >
+            <div
+                className="map-container"
+                style={{
+                    transform: `scale(${currentScale})`,
+                    transition: "transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1)"
+                } as CSSProperties}
+            >
+                <div className="layer" style={getLayerStyle('world')}>
+                    <img src={World} draggable={false} alt="world" />
+                </div>
+                <div className="layer top-0 left-50" style={getLayerStyle('flower1')}>
+                    <img src={Flower1} draggable={false} alt="flower1" />
+                </div>
+                <div className="layer top-100 left-0" style={getLayerStyle('shards1')}>
+                    <img src={Shards1} draggable={false} alt="shards1" />
+                </div>
+                <div className="layer top-100 left-0" style={getLayerStyle('shards2')}>
+                    <img src={Shards2} draggable={false} alt="shards2" />
+                </div>
+                <div className="layer top-0 left-20" style={getLayerStyle('flower2')}>
+                    <img src={Flower2} draggable={false} alt="flower2" />
+                </div>
+                <div className="layer ui-layer" style={getLayerStyle('ui')}>
+                    {/* UI 绝对定位元素放置区 */}
                     <div
                         style={{
                             position: "absolute", // 顶层容器相对定位
-                            left: 500,
-                            top: 3300,
+                            left: 0,
+                            top: 0,
                             zIndex: 2,
                             width: 1000,          // 容器宽高可根据需要调整
                             height: 1000,          // 比如这里容器就足够包住所有按钮
@@ -262,52 +254,10 @@ export default function ParallaxMap() {
                         <Line start={{ x: 200 + 40, y: 0 + 40 }} end={{ x: 400 + 40, y: -200 + 40 }} />
                         <Line start={{ x: 400 + 40, y: 200 + 40 }} end={{ x: 400 + 40, y: -200 + 40 }} />
                     </div>
-
-                    <div
-                        style={{
-                            position: "absolute", // 顶层容器相对定位
-                            left: 1500,
-                            top: 3300,
-                            zIndex: 2,
-                            width: 1000,          // 容器宽高可根据需要调整
-                            height: 1000,          // 比如这里容器就足够包住所有按钮
-                            // border: "1px solid gray", // 可选，方便调试
-                        }}
-                    >
-                        <div style={{ position: "absolute", left: 0, top: 0, zIndex: 2 }}>
-                            <MiniDiamondButton bg={1} size={80} onClick={() => console.log("clicked")}>
-                                1-25
-                            </MiniDiamondButton>
-                        </div>
-                        <div style={{ position: "absolute", left: 200, top: 0, zIndex: 2 }}>
-                            <MiniDiamondButton bg={1} size={80} onClick={() => console.log("clicked")}>
-                                2-23
-                            </MiniDiamondButton>
-                        </div>
-                        <div style={{ position: "absolute", left: 400, top: -200, zIndex: 2 }}>
-                            <MiniDiamondButton bg={1} size={80} onClick={() => console.log("clicked")}>
-                                2-28
-                            </MiniDiamondButton>
-                        </div>
-                        <div style={{ position: "absolute", left: 400, top: 200, zIndex: 2 }}>
-                            <MiniDiamondButton bg={2} size={80} onClick={() => console.log("clicked")}>
-                                3-12
-                            </MiniDiamondButton>
-                        </div>
-                        {/* 两两连线 */}
-                        <Line start={{ x: 0 + 40, y: 0 + 40 }} end={{ x: 200 + 40, y: 0 + 40 }} />
-                        <Line start={{ x: 0 + 40, y: 0 + 40 }} end={{ x: 400 + 40, y: 200 + 40 }} />
-                        <Line start={{ x: 200 + 40, y: 0 + 40 }} end={{ x: 400 + 40, y: 200 + 40 }} />
-                        <Line start={{ x: 200 + 40, y: 0 + 40 }} end={{ x: 400 + 40, y: -200 + 40 }} />
-                        <Line start={{ x: 400 + 40, y: 200 + 40 }} end={{ x: 400 + 40, y: -200 + 40 }} />
-                    </div>
-
                 </div>
             </div>
-
-            <footer className="text-shadow">
-                {t("world.info")}
-            </footer>
         </div>
     );
-}
+};
+
+export default ParallaxMap;

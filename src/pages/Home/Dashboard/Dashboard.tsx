@@ -19,11 +19,10 @@ import AboutIcon from "../icons/about.svg?react";
 import DriveIcon from "../icons/drive.svg?react";
 import WeatherDisplay from '../../../components/WeatherDisplay/WeatherDisplay';
 import { playClick, playHover } from '../../../utils/sfx';
-
-
-
+import { useSceneTransition } from '../../../App';
 
 const Dashboard: React.FC = () => {
+  const { startTransition } = useSceneTransition();
   const { t } = useTranslation();
 
   return (
@@ -141,9 +140,27 @@ const Dashboard: React.FC = () => {
           <div className='tools-area relative'>
             <p className='gradient-text text-2xl'>{t("common.tool_box")}</p>
             <div className='box rd-large'>
-              <div className="box rd-medium"></div>
-              <div className="box rd-medium"></div>
-              <div className="box rd-medium"></div>
+              <div className="box rd-medium" onClick={
+                () =>
+                  startTransition("/cc", {
+                    onMid: () => {},
+                    onDone: () => {},
+                  })
+              }>汇率</div>
+              <div className="box rd-medium"  onClick={
+                () =>
+                  startTransition("/wheel", {
+                    onMid: () => {},
+                    onDone: () => {},
+                  })
+              }>转盘</div>
+              <div className="box rd-medium"   onClick={
+                () =>
+                  startTransition("/habit", {
+                    onMid: () => {},
+                    onDone: () => {},
+                  })
+              }>日常</div>
               <div className="box rd-medium"></div>
               <div className="box rd-medium"></div>
               <div className="box rd-medium"></div>

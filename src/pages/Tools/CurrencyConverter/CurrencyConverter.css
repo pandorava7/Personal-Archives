@@ -1,0 +1,89 @@
+/* CurrencyConverter.css */
+.input-group-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 25px;
+}
+
+.currency-select-row {
+  display: flex;
+  align-items: center ;
+  justify-content: flex-end;
+  gap: 15px;
+}
+
+.select-box {
+  flex: 1;
+}
+
+.swap-icon {
+  color: var(--primary-color);
+  opacity: 0.6;
+  display: flex;
+  align-items: center;
+}
+
+.main-convert-btn {
+  width: 100%;
+  height: 50px;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.result-display {
+  margin-top: 30px;
+  padding: 20px;
+  background: rgba(108, 92, 231, 0.05);
+  border-radius: 16px;
+  text-align: center;
+  border: 1px dashed var(--primary-color);
+}
+
+.result-label {
+  font-size: 13px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.result-value {
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--primary-color);
+}
+
+.result-unit {
+  font-size: 16px;
+  font-weight: 500;
+  margin-left: 5px;
+}
+
+.active-mode {
+  color: var(--primary-color) !important;
+  background: rgba(108, 92, 231, 0.1) !important;
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@media (max-width: 600px) {
+  .currency-select-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap:5px;
+  }
+  .swap-icon {
+    text-align: center;
+    padding: 0;
+  }
+}

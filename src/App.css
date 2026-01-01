@@ -10,3 +10,11 @@
   background: rgba(0, 0, 0, 0.4);
   border-radius: 10px;
 }
+
+.app-container {
+  display: flex;
+  height: 100vh;
+  background-color: var(--bg);
+  font-family: 'Inter', system-ui, sans-serif;
+  color: var(--text);
+}

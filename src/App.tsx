@@ -5,9 +5,13 @@ import { useTranslation } from "react-i18next";
 import DiamondButton from "./components/DiamondButton/DiamondButton";
 import LanguageSwitcher from "./components/LanguageSwitcher/LanguageSwitcher";
 import SceneTransition from "./components/SceneTransition/SceneTransition";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import ParallaxMap from "./pages/ParallaxMap/ParallaxMap";
 import Home from "./pages/Home/Home";
+import CurrencyConverter from "./pages/Tools/CurrencyConverter/CurrencyConverter";
+import Wheel from "./pages/Tools/WheelPage/WheelPage";
+import HabitTracker from "./pages/Tools/HabitTracker/HabitTracker";
+import WheelPage from "./pages/Tools/WheelPage/WheelPage";
 
 export type TransitionOptions = {
   to: string;
@@ -34,6 +38,8 @@ const App: React.FC = () => {
 
   const initialVideoRef = useRef<HTMLVideoElement>(null);
   const mainVideoRef = useRef<HTMLVideoElement>(null);
+  const location = useLocation();
+  const isHome = location.pathname === "/";
   const { t, i18n } = useTranslation();
 
   useEffect(() => {
@@ -77,11 +83,14 @@ const App: React.FC = () => {
         <Routes>
           <Route path="/" element={<Home entered={entered} />} />
           <Route path="/map" element={<ParallaxMap />} />
+          <Route path="/cc" element={<CurrencyConverter />} />
+          <Route path="/wheel" element={<WheelPage />} />
+          <Route path="/habit" element={<HabitTracker />} />
         </Routes>
       </TransitionContext.Provider>
 
       {/* 场景层：通过 CSS 隐藏或 key 切换 */}
-      {!entered && (
+      {isHome && !entered && (
         <div className="page-waiting w-screen h-screen overflow-y-hidden">
           <video
             ref={initialVideoRef}
