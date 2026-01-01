@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import type { ChangeEvent, FormEvent } from 'react';
-import { Plus, Trash2, Flame, CheckCircle2, Download, Upload, AlertCircle, Home } from 'lucide-react';
+import { Trash2, Flame, CheckCircle2, Download, Upload, AlertCircle, Home } from 'lucide-react';
 import './HabitTracker.css';
 import { useSceneTransition } from '../../../App';
 

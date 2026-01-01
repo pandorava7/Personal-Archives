@@ -55,13 +55,13 @@ const ParallaxMap: React.FC = () => {
     const clamp = (val: number, min: number, max: number) => Math.max(min, Math.min(max, val));
 
     // 更新 Offset 并应用边界限制
-    const updateOffset = useCallback((newX: number, newY: number) => {
-        const { limitX, limitY } = getBoundaries();
-        setOffset({
-            x: clamp(newX, -limitX, limitX),
-            y: clamp(newY, -limitY, limitY)
-        });
-    }, [getBoundaries]);
+    // const updateOffset = useCallback((newX: number, newY: number) => {
+    //     const { limitX, limitY } = getBoundaries();
+    //     setOffset({
+    //         x: clamp(newX, -limitX, limitX),
+    //         y: clamp(newY, -limitY, limitY)
+    //     });
+    // }, [getBoundaries]);
 
     // 惯性动画逻辑
     const animate = useCallback(() => {
@@ -156,14 +156,14 @@ const ParallaxMap: React.FC = () => {
         }));
     }, [currentScale, getBoundaries]);
 
-    const handleWheel = (e: React.WheelEvent) => {
-        const delta = e.deltaY > 0 ? 0.9 : 1.1; // 缩放系数
-        const nextScale = clamp(currentScale * delta, 0.8, 1.2);
+    // const handleWheel = (e: React.WheelEvent) => {
+    //     const delta = e.deltaY > 0 ? 0.9 : 1.1; // 缩放系数
+    //     const nextScale = clamp(currentScale * delta, 0.8, 1.2);
 
-        // 如果需要以鼠标为中心缩放，计算会更复杂：
-        // 需要计算鼠标相对于容器中心的坐标，并对 offset 进行反向补偿
-        handleZoom(nextScale);
-    };
+    //     // 如果需要以鼠标为中心缩放，计算会更复杂：
+    //     // 需要计算鼠标相对于容器中心的坐标，并对 offset 进行反向补偿
+    //     handleZoom(nextScale);
+    // };
 
     return (
         <div

@@ -9,7 +9,6 @@ import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import ParallaxMap from "./pages/ParallaxMap/ParallaxMap";
 import Home from "./pages/Home/Home";
 import CurrencyConverter from "./pages/Tools/CurrencyConverter/CurrencyConverter";
-import Wheel from "./pages/Tools/WheelPage/WheelPage";
 import HabitTracker from "./pages/Tools/HabitTracker/HabitTracker";
 import WheelPage from "./pages/Tools/WheelPage/WheelPage";
 

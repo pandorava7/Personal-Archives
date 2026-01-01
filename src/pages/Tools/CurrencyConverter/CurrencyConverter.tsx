@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef, type JSX } from "react";
+import { useEffect, useState, type JSX } from "react";
 import { ArrowRightLeft, Home, RefreshCw, Globe, ZapOff, AlertCircle } from "lucide-react";
 import "../ToolPage.css"; // 引入通用样式
 import "./CurrencyConverter.css"; // 存放特有动画或局部微调

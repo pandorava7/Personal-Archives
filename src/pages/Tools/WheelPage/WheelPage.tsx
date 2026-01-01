@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Trash2, Edit3, Plus, Download, Upload, Play, Settings, Home } from 'lucide-react';
+import { Trash2, Plus, Download, Upload, Settings, Home } from 'lucide-react';
 import '../ToolPage.css'; // 使用通用样式
 import './WheelPage.css'; // 仅保留转盘特有的 SVG 动画和指针样式
 import { useSceneTransition } from '../../../App';
@@ -85,21 +85,21 @@ const WheelPage: React.FC = () => {
     link.click();
   };
 
-  const importData = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        try {
-          const json = JSON.parse(event.target?.result as string);
-          setWheels(json);
-        } catch (err) {
-          alert('无效的 JSON 文件');
-        }
-      };
-      reader.readAsText(file);
-    }
-  };
+  // const importData = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const file = e.target.files?.[0];
+  //   if (file) {
+  //     const reader = new FileReader();
+  //     reader.onload = (event) => {
+  //       try {
+  //         const json = JSON.parse(event.target?.result as string);
+  //         setWheels(json);
+  //       } catch (err) {
+  //         alert('无效的 JSON 文件');
+  //       }
+  //     };
+  //     reader.readAsText(file);
+  //   }
+  // };
 
   return (
     <div className="tool-container">
