@@ -6,7 +6,7 @@ import strip from 'strip-markdown';
 
 // 配置路径
 const postsDirectory = path.join(process.cwd(), 'public/r2/posts');
-const outputFile = path.join(process.cwd(), 'public/r2/posts.json');
+const outputFile = path.join(process.cwd(), 'public/r2/posts.json'); 
 
 async function generatePosts() {
   // 检查目标目录是否存在，不存在则创建
@@ -58,7 +58,7 @@ async function generatePosts() {
 }
 
 // ESM 环境下可以直接运行
-generatePosts().catch(err => {
-  console.error('❌ 生成失败:', err);
-  process.exit(1);
-});
+// generatePosts().catch(err => {
+//   console.error('❌ 生成失败:', err);
+//   process.exit(1);
+// });
