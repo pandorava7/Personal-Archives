@@ -25,4 +25,3 @@ dist-ssr
 
 # 忽略静态资源文件
 /public/r2/
-generate-posts.js
