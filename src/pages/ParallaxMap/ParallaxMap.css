@@ -44,8 +44,9 @@
 /* UI层需要交互 */
 .ui-layer {
   pointer-events: auto;
-  zoom: .8;
-
+  zoom: 1;
+border: 10px solid white;
+  height: 100%;
 }
 
 .ui-content-wrapper {
@@ -176,5 +177,76 @@
     width: 4px;
     height: 80px;
     margin: 10px 0;
+  }
+}
+
+/* 整体遮罩 */
+.overlay-mask {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0, 0, 0, 0.7);
+}
+
+/* 居中容器 */
+.overlay-center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 文本盒子 */
+.overlay-text-box {
+  max-width: 48rem;              /* 等价 max-w-3xl */
+  max-height: 80vh;              /* 关键：限制高度 */
+  padding: 1.5rem 2rem;
+  color: #fff;
+  font-size: 1.125rem;
+  line-height: 1.75;
+  font-family: monospace;
+  white-space: pre-wrap;
+
+  overflow-y: auto;              /* 超出时显示纵向滚动 */
+  pointer-events: auto;          /* 允许滚动 */
+
+  scrollbar-width: thin;         /* Firefox */
+}
+
+/* WebKit 滚动条优化（可选） */
+.overlay-text-box::-webkit-scrollbar {
+  width: 6px;
+}
+
+.overlay-text-box::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 3px;
+}
+
+.overlay-text-box::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* 打字光标 */
+/* .typing-cursor {
+  display: inline-block;
+  width: 0.6ch;
+  height: 1em;
+  margin-left: 2px;
+  background: currentColor;
+  animation: blink 1s steps(1) infinite;
+} */
+
+/* 打字光标（文本版） */
+.typing-cursor {
+  display: inline-block;
+  margin-left: 2px;
+  /* animation: blink 1s steps(1) infinite; */
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
   }
 }

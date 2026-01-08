@@ -19,6 +19,8 @@
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
+  
+    background-attachment: fixed;
   gap:100px;
   padding: 0 50px;
 }

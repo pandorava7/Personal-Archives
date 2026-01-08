@@ -20,10 +20,23 @@ import DriveIcon from "../icons/drive.svg?react";
 import WeatherDisplay from '../../../components/WeatherDisplay/WeatherDisplay';
 import { playClick, playHover } from '../../../utils/sfx';
 import { useSceneTransition } from '../../../App';
+import { CalendarCheck2, Coins, LoaderPinwheel, Tag } from 'lucide-react';
 
 const Dashboard: React.FC = () => {
   const { startTransition } = useSceneTransition();
   const { t } = useTranslation();
+
+  // 统一的跳转处理
+  const handleNav = (path: string) => {
+    playClick();
+    startTransition(path, { onMid: () => { }, onDone: () => { } });
+  };
+
+  const TOOLS_CONFIG = [
+    { path: '/cc', name: '汇率', icon: Coins },
+    { path: '/wheel', name: '转盘', icon: CalendarCheck2 },
+    { path: '/habit', name: '日常', icon: LoaderPinwheel },
+  ];
 
   return (
     <div className='home-container w-full box-shadow-lg'>
@@ -48,7 +61,7 @@ const Dashboard: React.FC = () => {
       <div className='content-area'>
         {/* 角色 */}
         <div className='home-character'>
-          <img src={`${ASSET_BASE_URL}/media/character/45.png`} alt="" />
+          <img src={`${ASSET_BASE_URL}/media/character/shiro/shiro_character.png`} alt="" />
         </div>
 
         <div className='media-box'>
@@ -71,7 +84,7 @@ const Dashboard: React.FC = () => {
               <TimeDisplay />
             </div>
 
-            <div className='box rd-infinity flex gap-5 items-center'>
+            <div className='box glass rd-infinity flex gap-5 items-center'>
               <img className='rd-infinity w-25 h-25' src={Avatar} alt="avatar" />
               <div className='h-full flex flex-col justify-between w-full pr-5'>
                 <p className='text-xl'>{t("introduce")}</p>
@@ -90,7 +103,7 @@ const Dashboard: React.FC = () => {
             </div>
 
             <div className='flex flex-row justify-between gap-3'>
-              <div className="box-button search-bar box rd-infinity w-7/10 pr-2 flex flex-row items-center">
+              <div className="box-button search-bar box glass rd-infinity w-7/10 pr-2 flex flex-row items-center">
                 <input
                   type="text"
                   placeholder={t("common.search_placeholder")}
@@ -98,13 +111,13 @@ const Dashboard: React.FC = () => {
                 />
                 <SearchIcon className="icon" />
               </div>
-              <div className='box-button write-article box rd-infinity w-3/10 text-center text-xl'
-                onMouseEnter={playHover} onClick={() => { playClick(); }}>
+              <div className='box-button write-article box glass rd-infinity w-3/10 text-center text-xl'
+                onMouseEnter={playHover} onClick={() => { playClick(); handleNav("/blog") }}>
                 {t("common.write_article_button")}
               </div>
             </div>
 
-            <div className='general-area box rd-large'>
+            <div className='general-area box glass rd-large'>
               <p className='text-shadow-sm'>{t("common.general")}</p>
               <div className="list w-2/2">
                 <div className="item archive"
@@ -139,55 +152,29 @@ const Dashboard: React.FC = () => {
           {/* 工具箱 */}
           <div className='tools-area relative'>
             <p className='gradient-text text-2xl'>{t("common.tool_box")}</p>
-            <div className='box rd-large'>
-              <a
-                href="/cc" // 允许右键“在新标签页打开”
-                className="box rd-medium block no-underline" // 记得加 block 保持布局
-                onClick={(e) => {
-                  // 阻止浏览器默认的跳转行为，让 startTransition 控制跳转
-                  e.preventDefault();
-
-                  startTransition("/cc", {
-                    onMid: () => { },
-                    onDone: () => { },
-                  });
-                }}
-              >
-                汇率
-              </a>
-              <a
-                href="/wheel" // 允许右键“在新标签页打开”
-                className="box rd-medium block no-underline" // 记得加 block 保持布局
-                onClick={(e) => {
-                  // 阻止浏览器默认的跳转行为，让 startTransition 控制跳转
-                  e.preventDefault();
-
-                  startTransition("/cc", {
-                    onMid: () => { },
-                    onDone: () => { },
-                  });
-                }}
-              >
-                转盘
-              </a>
-              <a
-                href="/habit" // 允许右键“在新标签页打开”
-                className="box rd-medium block no-underline" // 记得加 block 保持布局
-                onClick={(e) => {
-                  // 阻止浏览器默认的跳转行为，让 startTransition 控制跳转
-                  e.preventDefault();
-
-                  startTransition("/cc", {
-                    onMid: () => { },
-                    onDone: () => { },
-                  });
-                }}
-              >
-                日常
-              </a>
-              <div className="box rd-medium"></div>
-              <div className="box rd-medium"></div>
-              <div className="box rd-medium"></div>
+            <div className='box glass rd-large'>
+              {
+                TOOLS_CONFIG.map((tool, idx) => {
+                  const Icon = tool.icon || Tag;
+                  return (
+                    <a key={idx} onClick={() => handleNav(tool.path)} className="card">
+                      <div className="card-inner">
+                        <div className="card-front"><Icon className="" /></div>
+                        <div className="card-back"><span>{tool.name}</span></div>
+                      </div>
+                    </a>
+                  )
+                })
+              }
+              <div className="card">
+                <div className="card-inner">
+                  <div className="card-front">Front Side</div>
+                  <div className="card-back">Back Side</div>
+                </div>
+              </div>
+              <div className="box glass rd-medium"></div>
+              <div className="box glass rd-medium"></div>
+              <div className="box glass rd-medium"></div>
             </div>
           </div>
         </div>

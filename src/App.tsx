@@ -11,6 +11,8 @@ import Home from "./pages/Home/Home";
 import CurrencyConverter from "./pages/Tools/CurrencyConverter/CurrencyConverter";
 import HabitTracker from "./pages/Tools/HabitTracker/HabitTracker";
 import WheelPage from "./pages/Tools/WheelPage/WheelPage";
+import BlogPage from "./pages/BlogPage/BlogPage";
+import PostDetail from "./pages/PostDetail/PostDetail";
 
 export type TransitionOptions = {
   to: string;
@@ -85,6 +87,8 @@ const App: React.FC = () => {
           <Route path="/cc" element={<CurrencyConverter />} />
           <Route path="/wheel" element={<WheelPage />} />
           <Route path="/habit" element={<HabitTracker />} />
+          <Route path="/blog" element={<BlogPage />} />
+          <Route path="/post/:id" element={<PostDetailWrapper />} />
         </Routes>
       </TransitionContext.Provider>
 
@@ -134,6 +138,13 @@ const App: React.FC = () => {
 
     </div>
   );
+};
+
+// 辅助组件：从 URL 中提取 ID 并传给 PostDetail
+import { useParams } from 'react-router-dom';
+const PostDetailWrapper = () => {
+  const { id } = useParams<{ id: string }>();
+  return <PostDetail postId={id || ''} />;
 };
 
 export default App;

@@ -16,4 +16,8 @@ export default defineConfig({
       "@": path.resolve(__dirname, "src"),
     },
   },
+  define: {
+    // 这里的 global 会被替换为 window，从而自动挂载 Buffer
+    'global': 'window', 
+  },
 })
