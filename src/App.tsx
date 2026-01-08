@@ -50,8 +50,8 @@ const App: React.FC = () => {
   const location = useLocation();
   const isHome = location.pathname === "/";
   const isWorld = location.pathname === "/world";
-  const isBlog = location.pathname === "/blog";
-  const isLinks = location.pathname === "/links";
+  // const isBlog = location.pathname === "/blog";
+  // const isLinks = location.pathname === "/links";
   // 判断逻辑：如果不是首页，或者已经是进入状态(entered)，则显示导航栏
   const shouldShowNavbar = entered && (!isWorld && !isHome);
   const DEFAULT_USER: UserData = {

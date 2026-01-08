@@ -3,7 +3,6 @@ import React from 'react';
 import './Dashboard.css';
 import { useTranslation } from 'react-i18next';
 import LanguageSwitcher from '../../../components/LanguageSwitcher/LanguageSwitcher';
-import UserAvatar from "@/assets/images/your-avatar.jpg"
 import Avatar from "@/assets/images/me-avatar.jpg"
 import ThemeSwitcher from '../../../components/ThemeSwitcher/ThemeSwitcher';
 import MusicPlayer from '../../../components/MusicPlayer/MusicPlayer';

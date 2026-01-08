@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import styles from './BlogPage.module.css';
-import { Folder, Clock, Hash, X, Coffee, BookOpen, Tag, ChevronLeft } from 'lucide-react';
+import { Folder, Clock, Hash, X, Coffee, BookOpen, Tag } from 'lucide-react';
 import { ASSET_BASE_URL } from '../../config/assets';
 import { useBlogData } from './useBlogData';
 import { useNavigate } from 'react-router-dom';
