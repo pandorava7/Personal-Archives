@@ -32,6 +32,14 @@ export const useSceneTransition = () => {
   return ctx;
 };
 
+// 定义用户数据的类型
+export interface UserData {
+  name: string;
+  avatarUrl: string;
+  role?: string; // 可选属性，比如管理员、博主
+  level?: number;
+}
+
 const App: React.FC = () => {
   const [entered, setEntered] = useState<boolean>(() => {
     return sessionStorage.getItem("entered") === "true";
@@ -41,6 +49,15 @@ const App: React.FC = () => {
   const mainVideoRef = useRef<HTMLVideoElement>(null);
   const location = useLocation();
   const isHome = location.pathname === "/";
+  const isWorld = location.pathname === "/world";
+  const isBlog = location.pathname === "/blog";
+  const isLinks = location.pathname === "/links";
+  // 判断逻辑：如果不是首页，或者已经是进入状态(entered)，则显示导航栏
+  const shouldShowNavbar = entered && (!isWorld && !isHome);
+  const DEFAULT_USER: UserData = {
+    name: "Guest User",
+    avatarUrl: "https://api.dicebear.com/7.x/avataaars/svg?seed=Felix", // 随机头像 API
+  };
   const { t, i18n } = useTranslation();
 
   useEffect(() => {
@@ -83,13 +100,17 @@ const App: React.FC = () => {
 
         <Routes>
           <Route path="/" element={<Home entered={entered} />} />
-          <Route path="/map" element={<ParallaxMap />} />
+          <Route path="/world" element={<ParallaxMap />} />
           <Route path="/cc" element={<CurrencyConverter />} />
           <Route path="/wheel" element={<WheelPage />} />
           <Route path="/habit" element={<HabitTracker />} />
           <Route path="/blog" element={<BlogPage />} />
           <Route path="/post/:id" element={<PostDetailWrapper />} />
+          <Route path="/links" element={<FriendLink />} />
         </Routes>
+
+        {/* 只有在满足条件时才渲染 Navbar */}
+        {shouldShowNavbar && <Navbar user={DEFAULT_USER} />}
       </TransitionContext.Provider>
 
       {/* 场景层：通过 CSS 隐藏或 key 切换 */}
@@ -127,7 +148,7 @@ const App: React.FC = () => {
 
               <div className="adjust-in-enter-page absolute bottom-0">
 
-                <LanguageSwitcher direction="left" arrange="up" />
+                <LanguageSwitcher direction="right" arrange="up" />
               </div>
             </div>
 
@@ -142,6 +163,8 @@ const App: React.FC = () => {
 
 // 辅助组件：从 URL 中提取 ID 并传给 PostDetail
 import { useParams } from 'react-router-dom';
+import Navbar from "./components/Navbar/Navbar";
+import FriendLink from "./pages/FriendLink/FriendLink";
 const PostDetailWrapper = () => {
   const { id } = useParams<{ id: string }>();
   return <PostDetail postId={id || ''} />;

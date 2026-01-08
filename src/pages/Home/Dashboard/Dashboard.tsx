@@ -42,10 +42,10 @@ const Dashboard: React.FC = () => {
     <div className='home-container w-full box-shadow-lg'>
 
       {/* 左上角头像（绝对定位） */}
-      <div className='account-area'>
+      {/* <div className='account-area'>
         <img className='w-15 h-15' src={UserAvatar} alt="avatar" />
         <p>{t("common.username")}</p>
-      </div>
+      </div> */}
 
 
       {/* 右侧往下排列的功能按钮（绝对定位） */}

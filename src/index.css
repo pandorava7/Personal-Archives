@@ -4,6 +4,9 @@
 body {
   margin: 0;
   font-family: "MyFont";
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch; /* iOS 上启用惯性 */
+  scroll-behavior: smooth;
 }
 
 :root {

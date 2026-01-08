@@ -1,0 +1,120 @@
+.fl-container {
+  width: 100%;
+  padding: 20px;
+  padding-top: 64px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  font-family: "JetBrains Mono", "HarmonyOS Sans", "Noto Sans SC", sans-serif;
+}
+
+/* 控件 */
+.fl-controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.fl-search {
+  flex: 1;
+  padding: 6px 12px;
+  border: 1px solid #8cf;
+  background: rgba(20, 20, 40, 0.8);
+  color: #ddf;
+  border-radius: 6px;
+}
+
+.fl-select {
+  padding: 6px;
+  border-radius: 6px;
+  border: 1px solid #79f;
+  background: rgba(30,30,60,0.8);
+  color: #eef;
+}
+
+.fl-random {
+  padding: 6px 14px;
+  border: none;
+  border-radius: 6px;
+  background: linear-gradient(135deg, #59f, #9ef);
+  color: #fff;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.fl-random:hover {
+  filter: brightness(1.15);
+}
+
+/* grid */
+.fl-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill,minmax(210px,1fr));
+  gap: 12px;
+}
+
+/* 卡片 */
+.fl-card {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
+  gap: 6px;
+  border-radius: 10px;
+  border: 1px solid #9bf;
+  background: rgba(40, 35, 70, 0.65);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 0 8px rgba(120,180,255,0.35);
+  transition: 0.22s ease;
+}
+
+.fl-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0 12px rgba(140,200,255,0.6);
+}
+
+/* 死链标记 */
+.fl-dead {
+  opacity: 0.55;
+  filter: grayscale(0.7);
+  border-color: #888;
+  box-shadow: none;
+}
+
+.fl-avatar {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.fl-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.fl-title {
+  font-weight: bold;
+  color: #fff;
+  font-size: 15px;
+}
+
+.fl-desc {
+  font-size: 13px;
+  color: #ccd;
+}
+
+.fl-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.fl-tag {
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 11px;
+  background: rgba(120,160,255,0.3);
+  color: #eef;
+}

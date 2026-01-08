@@ -63,6 +63,7 @@
     width: 100vw;
     height: auto;
     min-height: 110vh;
+    padding: 14px;
 }
 
 .account-area {

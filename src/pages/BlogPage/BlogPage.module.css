@@ -1,6 +1,7 @@
 .container {
   min-height: 100vh;
   width: 100vw;
+  margin-top: 64px;
 }
 
 /* Header 与 背景图处理 */

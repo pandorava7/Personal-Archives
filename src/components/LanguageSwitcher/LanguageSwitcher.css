@@ -42,7 +42,7 @@
 }
 
 .lang-options.open.right {
-    transform: translateX(3rem);
+    transform: translateX(4rem);
     opacity: 1;
     pointer-events: auto;
 }
@@ -52,7 +52,7 @@
 }
 
 .lang-options.open.left {
-    transform: translateX(-10rem);
+    transform: translateX(-11rem);
     opacity: 1;
     pointer-events: auto;
 }
