@@ -45,7 +45,7 @@ const Highlights: React.FC = () => {
                 _className="absolute -right-7 top-65"
                 height={20} width={140}
                 onClick={() =>
-                  startTransition("/map", {
+                  startTransition("/world", {
                     onMid: () => {
                       console.log("现在是黑屏，可以切页面");
                     },
@@ -61,7 +61,7 @@ const Highlights: React.FC = () => {
                 _className="absolute -right-15 top-55"
                 width={20} height={80}
                 onClick={() =>
-                  startTransition("/map", {
+                  startTransition("/world", {
                     onMid: () => {
                       console.log("现在是黑屏，可以切页面");
                     },
@@ -77,7 +77,7 @@ const Highlights: React.FC = () => {
                 _className="absolute -right-12 top-37"
                 width={90} height={90}
                 onClick={() =>
-                  startTransition("/map", {
+                  startTransition("/world", {
                     onMid: () => {
                       console.log("现在是黑屏，可以切页面");
                     },
