@@ -111,7 +111,7 @@ const Dashboard: React.FC = () => {
                 <SearchIcon className="icon" />
               </div>
               <div className='box-button write-article box glass rd-infinity w-3/10 text-center text-xl'
-                onMouseEnter={playHover} onClick={() => { playClick(); handleNav("/blog") }}>
+                onMouseEnter={playHover} onClick={() => { playClick(); handleNav("https://www.pandorava7.com/blog") }}>
                 {t("common.write_article_button")}
               </div>
             </div>
